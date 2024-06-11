@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <style>
+    .image-container {
+      width: 100%;
+      max-width: 400px;
+      margin: auto;
+      text-align: center; 
+    }
+    .image-container img {
+      width: 100%;
+      height: auto;
+    }
+    .description {
+      margin-top: 20px;
+      font-size: 16px;
+    }
+    .button-container {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+    .button-container .btn {
+      margin-right: 10px; 
+    }
+    .button-container .btn:last-child {
+      margin-right: 0; 
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="image-container">
+    <img src="https://via.placeholder.com/500" alt="Sample Image">
+    <div class="description">
+      <p>This is a sample description for the image. It provides additional details about the content depicted in the image.</p>
+    </div>
+  </div>
+  <div class="button-container">
+    <a href=""><button type="button" class="btn btn-warning">Add to Cart</button></a>
+    <button type="button" class="btn btn-danger">Buy Now</button>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shirts</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: white;
+            background-attachment: fixed;
+            background-size: cover;
+            background-position: center;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            transition: margin-left 0.5s; 
+        }
+        .Title {
+            text-align: center;
+            background-color: indigo;
+            color: white;
+            padding: 20px 0;
+            margin: 0;
+            font-size: 50px;
+            font-family: 'Times New Roman', Times, serif;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            transition: margin-left 0.5s; 
+        }
+        h1 {
+            text-align: center;
+            margin-top: 30px;
+        }
+        .search-bar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 40px 0;
+        }
+        .search-bar input[type="text"] {
+            width: 300px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .search-bar button {
+            padding: 10px 20px;
+            margin-left: 10px;
+            background-color: indigo;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .search-bar button:hover {
+            background-color: rgb(112, 53, 155);
+        }
+        .search-bar .microphone {
+            display: flex;
+            align-items: center;
+            margin-left: 10px;
+        }
+        .search-bar .microphone button {
+            background-color: transparent;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            padding: 0;
+        }
+        .search-bar .microphone button img {
+            width: 30px;
+            height: 30px;
+        }
+        .image {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            width: 75px;
+            height: 75px;
+            border-radius: 7px;
+        }
+        .content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: calc(100vh - 50px);
+            text-align: center;
+            padding: 20px;
+        }
+        .logo {
+            margin-bottom: 20px;
+            width: 150px;
+            padding-left: 1000px;
+        }
+        .menu-icon-container {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            z-index: 1000;
+        }
+        .mic-icon {
+            cursor: pointer;
+            margin-left: 10px;
+        }
+        .sidebar {
+            height: 100%;
+            width: 250px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: rgba(75, 0, 130, 0.9); /* Semi-transparent indigo */
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+            z-index: 999;
+            transform: translateX(-250px); /* Initially hide the sidebar */
+        }
+        .sidebar a {
+            padding: 8px 8px 8px 32px;
+            text-decoration: none;
+            font-size: 25px;
+            color: #f1f1f1;
+            display: block;
+            transition: 0.3s;
+        }
+        .sidebar a:hover {
+            color: #ffd700; /* Gold color on hover */
+        }
+        .sidebar .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+        }
+        .sidebar .logout {
+            position: absolute;
+            bottom: 100px;
+            font-size: 25px;
+            color: #f1f1f1;
+        }
+        .sidebar .logout:hover {
+            color: #ffd700;
+        }
+        .dress-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        .dress-item {
+            text-align: center;
+            margin-bottom: 30px;
+            width: calc(33.333% - 20px); 
+            margin-right: 10px;
+            margin-left: 10px;
+            transition: transform 0.3s, box-shadow 0.3s; 
+        }
+        .dress-item img {
+            width: 100%;
+            height: 400px;
+            border-radius: 5px;
+            border: 1px solid black;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            object-fit: cover; /* Ensures the entire image is visible */
+            transition: transform 0.3s, box-shadow 0.3s; 
+        }
+        .dress-item:hover img {
+            transform: scale(1.05); 
+            box-shadow: 0 8px 16px indigo; 
+        }
+        .dress-item h2 {
+            margin-top: 10px;
+            margin-bottom: 5px;
+        }
+        .dress-item p {
+            margin: 0;
+        }
+        .buttons-container {
+            margin-top: 10px;
+        }
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 10px 0;
+            background-color: #f0f0f0;
+        }
+        .add-to-cart {
+            width: 100px;
+            height: 50px;
+            background-color: yellow;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .Buy-now {
+            width: 100px;
+            height: 50px;
+            background-color: red;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        @media (max-width: 768px) {
+            .search-bar input[type="text"] {
+                width: 200px;
+                font-size: 14px;
+            }
+            .search-bar button {
+                padding: 8px 16px;
+                font-size: 14px;
+            }
+            .dress-item {
+                width: calc(50% - 20px); /* Adjust to 2 items per row */
+            }
+        }
+        @media (max-width: 480px) {
+            .search-bar input[type="text"] {
+                width: 150px;
+                font-size: 12px;
+            }
+            .search-bar button {
+                padding: 6px 12px;
+                font-size: 12px;
+            }
+            .dress-item {
+                width: calc(100% - 20px); /* Adjust to 1 item per row */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <img class="image" src="logo-image.png" alt="Bucket Budget Logo">
+    <header>
+        <h1 class="Title">Shirts</h1>
+    </header>
+        <div class="search-bar">
+            <input id="searchInput" type="text" placeholder="Search for your shopping....">
+            <button id="searchButton" type="button">Search</button>
+            <div class="microphone">
+                <button type="button"><img src="mic.svg" alt="Microphone"></button>
+            </div>
+        </div>
+    </header>
+        <div class="menu-icon-container">
+            <svg id="menuIcon" xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
+            </svg>
+        </div>
+    
+        <div id="sidebar" class="sidebar">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeSidebar()">&times;</a>
+            <a href="http://127.0.0.1:5500/Budget-Marketing.html">Home</a>
+            <a href="http://127.0.0.1:5500/profile%20page.html">Profile</a>
+            <a href="http://127.0.0.1:5500/add-to-cart.html">Add To Cart</a>
+            <a href="http://127.0.0.1:5500/order-success.html">Your Orders</a>
+            <a href="http://127.0.0.1:5500/Login.html" class="logout">Log Out</a>
+            </div>
+        
+        <section class="dress-container">
+            <div class="dress-item">
+                <img src="https://images-na.ssl-images-amazon.com/images/I/811O99wQmmL._UL1500_.jpg" alt="Allen Solly">
+                <h2>Allen Solly</h2>
+                <p>Allen Solly Men's Plain Regular Fit Cotton Casual Shirt</p>
+                <p>Price:999</p>
+
+                <div class="buttons-container">
+                    <button type="button" class="btn btn-warning button-left" onclick="addToCart(this)">Add to Cart</button>
+                    <button type="button" class="btn btn-danger button-right">Buy Now</button>
+                  </div>
+            </div>
+            <div class="dress-item">
+                <img src="https://i5.walmartimages.com/asr/3dea5eae-c64f-45e0-9a46-65a5d747f93f_1.42123b46aed6a4e6a2f7127f66a09080.jpeg" alt="Van Heusen ">
+                <h2>Van Heusen</h2>
+                <p>Van Heusen Mens Striped Short Sleeve Shirt</p>
+                <p>Price: 1199</p>
+                <div class="buttons-container">
+                    <button type="button" class="btn btn-warning button-left" onclick="addToCart(this)">Add to Cart</button>
+                    <button type="button" class="btn btn-danger button-right">Buy Now</button>
+                  </div>
+            </div>
+            <div class="dress-item">
+                <img src="https://johnlewis.scene7.com/is/image/JohnLewis/004325271?$rsp-pdp-port-640$" alt="Levis">
+                <h2>Levis</h2>
+                <p>Levis & Partner Regular Fit short Sleeve Linen Shirt</p>
+                <p>Price: 1599</p>
+                <div class="buttons-container">
+                    <button type="button" class="btn btn-warning button-left" onclick="addToCart(this)">Add to Cart</button>
+                    <button type="button" class="btn btn-danger button-right">Buy Now</button>
+                  </div>
+            </div>
+            <div class="dress-item">
+                <img src="https://rukminim1.flixcart.com/image/832/832/xif0q/shirt/s/o/m/-original-imaggcycz9rapvzz.jpeg?q=70" alt="Raymond">
+                <h2>Raymond</h2>
+                <p>Raymond Men Solid Formal Light Blue Shirt</p>
+                <p>Price: 899</p>
+                <div class="buttons-container">
+                    <button type="button" class="btn btn-warning button-left" onclick="addToCart(this)">Add to Cart</button>
+                    <button type="button" class="btn btn-danger button-right">Buy Now</button>
+                  </div>
+            </div>
+            <div class="dress-item">
+                <img src="https://fashionarrow.com/wp-content/uploads/2017/09/womens-denim-shirt-undefined-epdnfhh-.jpg" alt="Allen Solly">
+                <h2>Allen Solly</h2>
+                <p>Allen Solly Women's Regular fit shirt</p>
+                <p>Price:999</p>
+
+                <div class="buttons-container">
+                    <button type="button" class="btn btn-warning button-left" onclick="addToCart(this)">Add to Cart</button>
+                    <button type="button" class="btn btn-danger button-right">Buy Now</button>
+                  </div>
+            </div>
+            <div class="dress-item">
+                <img src="https://handcmediastorage.blob.core.windows.net/productimages/FV/FVPMA001-J30-143606-1400px-1820px.jpg" alt="Van Heusen ">
+                <h2>Van Heusen</h2>
+                <p>Van Heusen Women's Denim Labs Solid Shirts</p>
+                <p>Price: 999</p>
+                <div class="buttons-container">
+                    <button type="button" class="btn btn-warning button-left" onclick="addToCart(this)">Add to Cart</button>
+                    <button type="button" class="btn btn-danger button-right">Buy Now</button>
+                  </div>
+            </div>
+            <div class="dress-item">
+                <img src="https://i5.walmartimages.com/asr/571d42ff-52eb-4e09-a972-50f54ff7eb4c.f81d92203df6fcf2342784184003956a.jpeg" alt="Levis">
+                <h2>Levis</h2>
+                <p>Womens Levi's grey logo print crew neck Shirt</p>
+                <p>Price: 599</p>
+                <div class="buttons-container">
+                    <button type="button" class="btn btn-warning button-left" onclick="addToCart(this)">Add to Cart</button>
+                    <button type="button" class="btn btn-danger button-right">Buy Now</button>
+                  </div>
+            </div>
+            <div class="dress-item">
+                <img src="https://www.simonjersey.com/images/womens-long-sleeve-button-down-collar-shirt-white-p2819-217691_zoom.jpg" alt="Raymond">
+                <h2>Raymond</h2>
+                <p>Raymond Women's Regular Fit Shirt </p>
+                <p>Price: 899</p>
+                <div class="buttons-container">
+                    <button type="button" class="btn btn-warning button-left" onclick="addToCart(this)">Add to Cart</button>
+                    <button type="button" class="btn btn-danger button-right">Buy Now</button>
+                  </div>
+            </div>
+            <div class="dress-item">
+                <img src="https://imagescdn.planetfashion.in/img/app/product/7/712166-7800619-large.jpg" alt="Louis Philippe">
+                <h2>Louis Philippe</h2>
+                <p>Louis Philippe Men Grey Classic Fit Print Half Sleeves Formal Shirt</p>
+                <p>Price: 1999</p>
+                <div class="buttons-container">
+                    <button type="button" class="btn btn-warning button-left" onclick="addToCart(this)">Add to Cart</button>
+                    <button type="button" class="btn btn-danger button-right">Buy Now</button>
+                  </div>
+            </div>
+            <div class="dress-item">
+                <img src="https://n1.sdlcdn.com/imgs/h/d/q/John-Players-Blue-Slim-Fit-SDL277298692-1-7f9ab.jpeg" alt="John Players">
+                <h2>John Players</h2>
+                <p>Jhon Players 100 Percent Cotton Shirt</p>
+                <p>Price: 499</p>
+                <div class="buttons-container">
+                    <button type="button" class="btn btn-warning button-left" onclick="addToCart(this)">Add to Cart</button>
+                    <button type="button" class="btn btn-danger button-right">Buy Now</button>
+                  </div>
+            </div>
+            <div class="dress-item">
+                <img src="https://n4.sdlcdn.com/imgs/a/r/2/Peter-England-Red-Formals-Shirt-SDL574836898-1-4f961.jpg" alt="Peter England">
+                <h2>Peter England</h2>
+                <p>Peter England Red Cotton Herringbone Check Shirt</p>
+                <p>Price: 849</p>
+                <div class="buttons-container">
+                    <button type="button" class="btn btn-warning button-left" onclick="addToCart(this)">Add to Cart</button>
+                    <button type="button" class="btn btn-danger button-right">Buy Now</button>
+                  </div>
+            </div>
+            <div class="dress-item">
+                <img src="https://m.media-amazon.com/images/I/A1oqPqMIeRL._AC_UL1500_.jpg" alt="Lee">
+                <h2>Lee</h2>
+                <p>Lee Men's Denim Long Sleeve Shirt Heritage Western Regular Big Tall</p>
+                <p>Price: 1499</p>
+                <div class="buttons-container">
+                    <button type="button" class="btn btn-warning button-left" onclick="addToCart(this)">Add to Cart</button>
+                    <button type="button" class="btn btn-danger button-right">Buy Now</button>
+                  </div>
+            </div>
+            <div class="dress-item">
+                <img src="https://qb-style.s3.amazonaws.com/3651/3651-29445-xl.jpg" alt="Louis Philippe">
+                <h2>Louis Philippe</h2>
+                <p>Louis Philippe Shirts for Women</p>
+                <p>Price: 999</p>
+                <div class="buttons-container">
+                    <button type="button" class="btn btn-warning button-left" onclick="addToCart(this)">Add to Cart</button>
+                    <button type="button" class="btn btn-danger button-right">Buy Now</button>
+                  </div>
+            </div>
+            <div class="dress-item">
+                <img src="https://www.ehshirts.com/wp-content/uploads/2020/08/Light-blue-french-cuff-shirt-L.jpg" alt="John Players">
+                <h2>John Players</h2>
+                <p>Jhon Players Women's Grey Melange Solid  Shirt</p>
+                <p>Price: 799</p>
+                <div class="buttons-container">
+                    <button type="button" class="btn btn-warning button-left" onclick="addToCart(this)">Add to Cart</button>
+                    <button type="button" class="btn btn-danger button-right">Buy Now</button>
+                  </div>
+            </div>
+            <div class="dress-item">
+                <img src="https://i5.walmartimages.com/asr/53a3a45d-b4c7-4826-9a7a-f0c87fa6bdb0.a7933b65c4c97c8c336d43b19aa33bb0.jpeg" alt="Peter England">
+                <h2>Peter England</h2>
+                <p>Peter England Women's Striped Regular fit Shirt</p>
+                <p>Price: 999</p>
+                <div class="buttons-container">
+                    <button type="button" class="btn btn-warning button-left" onclick="addToCart(this)">Add to Cart</button>
+                    <button type="button" class="btn btn-danger button-right">Buy Now</button>
+                  </div>
+            </div>
+            <div class="dress-item">
+                <img src="https://i5.walmartimages.com/asr/1069dfea-24d9-4c48-b829-400a369754f8_1.cf6cd42bfe8efdc1133df34d2df1cc7d.jpeg" alt="Lee">
+                <h2>Lee</h2>
+                <p>Lee Women's Printed Slim Cotton Logo Shirt</p>
+                <p>Price: 1199</p>
+                <div class="buttons-container">
+                    <button type="button" class="btn btn-warning button-left" onclick="addToCart(this)">Add to Cart</button>
+                    <button type="button" class="btn btn-danger button-right">Buy Now</button>
+                  </div>
+            </div>
+            <div class="dress-item">
+                <img src="https://i.pinimg.com/originals/2e/a0/df/2ea0df44a7ad9f6b1dc5674a2bc862da.jpg" alt="Pinterest">
+                <h2>Pinterest</h2>
+                <p>Pinterest Men Shirt Floral Printing Long Sleeve Shirts men clothes Flowers</p>
+                <p>Price: 369</p>
+                <div class="buttons-container">
+                    <button type="button" class="btn btn-warning button-left" onclick="addToCart(this)">Add to Cart</button>
+                    <button type="button" class="btn btn-danger button-right">Buy Now</button>
+                  </div>
+            </div>
+            <div class="dress-item">
+                <img src="https://n3.sdlcdn.com/imgs/g/l/s/Provogue-Blue-Casual-Slim-Fit-SDL661485747-1-2cf78.jpg" alt="Provogue">
+                <h2>Provogue</h2>
+                <p>Provogue Blue Casual Slim Fit Shirt</p>
+                <p>Price:1199</p>
+                <div class="buttons-container">
+                    <<button type="button" class="btn btn-warning button-left" onclick="addToCart(this)">Add to Cart</button>
+                    <button type="button" class="btn btn-danger button-right">Buy Now</button>
+                  </div>
+            </div>
+            <div class="dress-item">
+                <img src="https://cdn04.nnnow.com/web-images/preview/styles/QPJZX202C7L/1609272776134/1.jpg" alt="Flying Machine">
+                <h2>Flying Machine</h2>
+                <p>Buy Flying machine Cotton Check Shirt</p>
+                <p>Price: 1899</p>
+                <div class="buttons-container">
+                    <button type="button" class="btn btn-warning button-left" onclick="addToCart(this)">Add to Cart</button>
+                    <button type="button" class="btn btn-danger button-right">Buy Now</button>
+                  </div>
+            </div>
+            <div class="dress-item">
+                <img src="https://i5.walmartimages.com/asr/252f52a3-024b-45fd-825f-5b8696e8b95b.9e5eb992175360fc12b2d9da54e32bd0.jpeg" alt="Wrangler">
+                <h2>Wrangler</h2>
+                <p>Wrangler Men's Premium Slim Fit Denim Shirt</p>
+                <p>Price: 1999</p>
+                <div class="buttons-container">
+                    <button type="button" class="btn btn-warning button-left" onclick="addToCart(this)">Add to Cart</button>
+                    <button type="button" class="btn btn-danger button-right">Buy Now</button>
+                  </div>
+            </div>
+            <div class="dress-item">
+                <img src="https://handcmediastorage.blob.core.windows.net/productimages/FI/FIPTX047-J87-143011-1400px-1820px.jpg" alt="Puma">
+                <h2>Puma</h2>
+                <p>Puma Women's Solid Regular Fit Shirt</p>
+                <p>Price: 699</p>
+                <div class="buttons-container">
+                    <button type="button" class="btn btn-warning button-left" onclick="addToCart(this)">Add to Cart</button>
+                    <button type="button" class="btn btn-danger button-right">Buy Now</button>
+                  </div>
+            </div>
+            <div class="dress-item">
+                <img src="https://handcmediastorage.blob.core.windows.net/productimages/FI/FIPMX051-B35-143477-1400px-1820px.jpg" alt="adidas">
+                <h2>Adidas</h2>
+                <p>Adidas Women's Slim Shirt</p>
+                <p>Price:1099</p>
+                <div class="buttons-container">
+                    <button type="button" class="btn btn-warning button-left" onclick="addToCart(this)">Add to Cart</button>
+                    <button type="button" class="btn btn-danger button-right">Buy Now</button>
+                  </div>
+            </div>
+            <div class="dress-item">
+                <img src="https://cdnc.lystit.com/photos/2013/10/25/lauren-by-ralph-lauren-white-ruffle-shirt-product-1-14483609-628732163.jpeg" alt="Flying Machine">
+                <h2>Flying Machine</h2>
+                <p>Devil's Women's Flying machine Shirt</p>
+                <p>Price: 1499</p>
+                <div class="buttons-container">
+                    <button type="button" class="btn btn-warning button-left" onclick="addToCart(this)">Add to Cart</button>
+                    <button type="button" class="btn btn-danger button-right">Buy Now</button>
+                  </div>
+            </div>
+            <div class="dress-item">
+                <img src="https://www.cinchjeans.com/store/pc/catalog/msw9164027_586_detail.jpg" alt="Wrangler">
+                <h2>Wrangler</h2>
+                <p>Wrangler Women's Pocket Performance Shirt</p>
+                <p>Price: 1799</p>
+                <div class="buttons-container">
+                    <button type="button" class="btn btn-warning button-left" onclick="addToCart(this)">Add to Cart</button>
+                    <button type="button" class="btn btn-danger button-right">Buy Now</button>
+            </div>
+            </div>
+
+        </section>
+        <script>
+            function openSidebar() {
+            document.getElementById("sidebar").style.transform = "translateX(0)";
+            document.getElementById("mainContainer").style.marginLeft = "250px";
+        }
+    
+        function closeSidebar() {
+            document.getElementById("sidebar").style.transform = "translateX(-250px)";
+            document.getElementById("mainContainer").style.marginLeft = "0";
+        }
+    
+        document.getElementById("menuIcon").addEventListener("click", openSidebar);
+    
+        function performSearch() {
+            const query = document.getElementById("searchInput").value.toLowerCase().trim();
+            if (query === "Clothes" ||query ===  "clothes" ||query ===  "Dresses" ||query ===  "dresses" ||query === "Clothes." ||query ===  "clothes." ||query ===  "Dresses." ||query ===  "dresses.") {
+                window.location.href = "http://127.0.0.1:5500/Fashion%20World.html"; 
+            } else if (query === "Shoes" ||query ===  "shoes" ||query ===  "Shoes." ||query ===  "shoes.") {
+                window.location.href = "http://127.0.0.1:5500/shoes.html";
+            } else if (query === "Cosmetics" ||query ===  "cosmetics" ||query ===  "Cosmetics." ||query ===  "cosmetics.") {
+                window.location.href = "http://127.0.0.1:5500/Cosmetics.html";
+            } else if (query === "Gadgets" ||query ===  "gadgets" ||query ===  "HomeUses" ||query === "Home-Uses" ||query ===  "homeuses" ||query ===  "home-uses" ||query ===  "Home Uses" ||query ===  "Home uses" ||query ===  "Home-uses" ||query ===  "home-Uses" ||query ===  "Gadgets." ||query ===  "gadgets." ||query ===  "HomeUses." ||query === "Home-Uses." ||query ===  "homeuses." ||query ===  "home-uses." ||query ===  "Home Uses." ||query ===  "Home uses." ||query ===  "Home-uses." ||query ===  "home-Uses." ||query ===  "HouseUses" ||query === "House-Uses" ||query ===  "houseuses" ||query ===  "house-uses" ||query ===  "House Uses" ||query ===  "House uses" ||query ===  "House-uses" ||query ===  "house-Uses") {
+                window.location.href = "http://127.0.0.1:5500/Gadgets.html";
+            } else if (query === "Vegetables" ||query ===  "vegetables" ||query ===  "Vegetables." ||query ===  "vegetables.") {
+                window.location.href = "http://127.0.0.1:5500/Vegetables.html";
+            } else if (query === "Fruits" ||query ===  "fruits" ||query === "Fruits." ||query === "fruits.") {
+                window.location.href = "http://127.0.0.1:5500/Fruits.html";
+            } else if (query === "Soft Drinks" ||query ===  "Soft-Drinks" ||query ===  "SoftDrinks" ||query ===  "Softdrinks" ||query ===  "soft Drinks" ||query ===  "soft drinks" ||query ===  "soft-drinks" ||query ===  "Soft-drinks" ||query ===  "soft-Drinks" ||query ===  "Soft Drinks." ||query ===  "Soft-Drinks." ||query ===  "SoftDrinks." ||query ===  "Softdrinks." ||query ===  "soft Drinks." ||query ===  "soft drinks." ||query ===  "soft-drinks." ||query ===  "Soft-drinks." ||query ===  "soft-Drinks.") {
+                window.location.href = "http://127.0.0.1:5500/Soft-Drinks.Html";
+            } else if (query === "Food" ||query ===  "food" ||query ===  "Food." ||query ===  "food.") {
+                window.location.href = "http://127.0.0.1:5500/Food.Html";
+            } else if (query === "Men-Shirts" ||query === "men-shirts" ||query === "Men Shirts." ||query === "Men shirts." ||query === "MenShirts." ||query === "Menshirts" ||query === "menshirts") {
+                    window.location.href = "http://127.0.0.1:5500/Men%20Shirts.html";
+                } else if (query === "Women-Shirts" ||query === "women-shirts" ||query === "Women Shirts." ||query === " women shirts." ||query === "WomenShirts." ||query === "Womenshirts" ||query === "womenshirts") {
+                    window.location.href = "http://127.0.0.1:5500/Women-Shirts.html";
+                } else if (query ===  "Men-Pants" ||query === "men-pants" ||query === "Men Pants." ||query === "men pants." ||query === "MenPants." ||query === "Menpants" ||query === "menpants") {
+                    window.location.href = "http://127.0.0.1:5500/Men-Pants.html";
+                } else if (query === "Women-Pants" ||query === "women-pants" ||query === "Women Pants." ||query === " women pants." ||query === "WomenPants." ||query === "Womenpants" ||query === "womenpants"){
+                    window.location.href = "http://127.0.0.1:5500/Women-Pants.html";
+                } else if (query === "Men-TShirts" ||query === "men-tshirts" ||query === "Men TShirts." ||query === "men tshirts." ||query === "MenTShirts." ||query === "Mentshirts" ||query === "mentshirts") {
+                    window.location.href = "http://127.0.0.1:5500/Men-Tshirt.html";
+                } else if (query === "Women-TShirts" ||query === "women-tshirts" ||query === "Women TShirts." ||query === " women tshirts." ||query === "WomenTShirts." ||query === "Womentshirts" ||query === "womentshirts") {
+                    window.location.href = "http://127.0.0.1:5500/Women-Tshirts.html";
+                } else if (query === "Shirts" ||query === "shirts" ||query === "Shirts." ||query === "shirts." ||query === "Shirts." ||query === "shirts" ||query === "shirts") {
+                    window.location.href = "http://127.0.0.1:5500/shirts.html";
+                } else if (query === "T-Shirts." ||query === "T-Shirts" ||query === "TShirts." ||query === "tshirts." ||query === "TShirts." ||query === "tshirts" ||query === "Tshirts" ||query === "T-Shirts" ||query === "TShirts" ||query === "T-shirts" ||query === "T-shirts." ) {
+                    window.location.href = "http://127.0.0.1:5500/T-Shirts.html";
+                } else if (query ===  "Pants" ||query === "pants" ||query === "Pants." ||query === "pants." ||query === "Pants." ||query === "pants" ||query === "pants") {
+                    window.location.href = "http://127.0.0.1:5500/pants.html";
+                } else {
+                    alert("Page not found.");
+                }
+            }
+            document.getElementById("searchButton").addEventListener("click", performSearch);
+    
+    document.getElementById("searchInput").addEventListener("keypress", function(event) {
+        if (event.key === "Enter") {
+            performSearch();
+        }
+    });
+
+    document.querySelector('.microphone button').addEventListener('click', function() {
+        var recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+        recognition.lang = 'en-US';
+        recognition.interimResults = false;
+        recognition.maxAlternatives = 1;
+
+        recognition.start();
+
+        recognition.onresult = function(event) {
+            var speechResult = event.results[0][0].transcript.replace(/\./g, '');
+            document.getElementById('searchInput').value = speechResult;
+            performSearch(); 
+        };
+
+        recognition.onerror = function(event) {
+            console.error('Speech recognition error detected: ' + event.error);
+        };
+
+        recognition.onspeechend = function() {
+            recognition.stop();
+        };
+    });
+
+    function addToCart(button) {
+        const item = button.closest('.dress-item');
+        const imgSrc = item.querySelector('img').src;
+        const name = item.querySelector('h2').innerText;
+        const description = item.querySelector('p:nth-of-type(1)').innerText;
+        const price = item.querySelector('p:nth-of-type(2)').innerText;
+
+        const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+        cartItems.push({ imgSrc, name, description, price });
+        localStorage.setItem('cartItems', JSON.stringify(cartItems));
+
+        window.location.href = 'http://127.0.0.1:5500/add-to-cart.html'; 
+    }
+
+    function buyNow(button) {
+        const item = button.closest('.dress-item');
+        const imgSrc = item.querySelector('img').src;
+        const name = item.querySelector('h2').innerText;
+        const description = item.querySelector('p:nth-of-type(1)').innerText;
+        const price = item.querySelector('p:nth-of-type(2)').innerText;
+
+        const orderItems = JSON.parse(localStorage.getItem('orderItems')) || [];
+        orderItems.push({ imgSrc, name, description, price });
+        localStorage.setItem('orderItems', JSON.stringify(orderItems));
+
+        window.location.href = 'http://127.0.0.1:5500/payment%20Address.html';
+    }
+
+    document.querySelectorAll('.btn-danger').forEach(button => {
+        button.addEventListener('click', function() {
+            buyNow(this);
+        });
+    });
+</script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</body>
+</html>

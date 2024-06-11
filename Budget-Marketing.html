@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: white;
+            background-attachment: fixed;
+            background-size: cover;
+            background-position: center;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            transition: margin-left 0.5s;
+        }
+        .Title {
+            text-align: center;
+            background-color: indigo;
+            color: white;
+            padding: 20px 0;
+            margin: 0;
+            font-size: 50px;
+            font-family: 'Times New Roman', Times, serif;
+        }
+        nav {
+            background-color: indigo;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+        .scrolling-text-container {
+            width: 100%;
+            overflow: hidden;
+            white-space: nowrap;
+            box-sizing: border-box;
+        }
+        .scrolling-text {
+            display: inline-block;
+            padding-left: 100%;
+            animation: scroll-text 15s linear infinite;
+        }
+        @keyframes scroll-text {
+            0% {
+                transform: translateX(100%);
+            }
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+        .search-bar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 40px 0;
+        }
+        .search-bar input[type="text"] {
+            width: 300px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .search-bar button {
+            padding: 10px 20px;
+            margin-left: 10px;
+            background-color: indigo;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .search-bar button:hover {
+            background-color: rgb(112, 53, 155);
+        }
+        .search-bar .microphone {
+            display: flex;
+            align-items: center;
+            margin-left: 10px;
+        }
+        .search-bar .microphone button {
+            background-color: transparent;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            padding: 0;
+        }
+        .search-bar .microphone button img {
+            width: 30px;
+            height: 30px;
+        }
+        .image {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            width: 75px;
+            height: 75px;
+            border-radius: 7px;
+        }
+        .content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: calc(100vh - 50px);
+            text-align: center;
+            padding: 20px;
+        }
+        .logo {
+            margin-bottom: 20px;
+            width: 150px;
+            padding-left: 1000px;
+        }
+        .menu-icon-container {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            z-index: 1000;
+        }
+        .mic-icon {
+            cursor: pointer;
+            margin-left: 10px;
+        }
+        .sidebar {
+            height: 100%;
+            width: 250px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: rgba(75, 0, 130, 0.9); /* Semi-transparent indigo */
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+            z-index: 999;
+            transform: translateX(-250px); /* Initially hide the sidebar */
+        }
+        .sidebar a {
+            padding: 8px 8px 8px 32px;
+            text-decoration: none;
+            font-size: 25px;
+            color: #f1f1f1;
+            display: block;
+            transition: 0.3s;
+        }
+        .sidebar a:hover {
+            color: #ffd700; /* Gold color on hover */
+        }
+        .sidebar .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+        }
+        .sidebar .logout {
+            position: absolute;
+            bottom: 50px;
+            font-size: 25px;
+            color: #f1f1f1;
+        }
+        .sidebar .logout:hover {
+            color: #ffd700;
+        }
+        .welcome-message {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .links a {
+            display: inline-block;
+            margin: 10px;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .links a:hover {
+            background-color: #0056b3;
+        }
+        .clothes {
+            padding-left: 30px;
+            padding-top: 20px;
+        }
+        .scrolling-wrapper {
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+        .scrolling-container {
+            display: flex;
+            width: calc(100% * 8);
+            animation: scroll 36s linear infinite;
+        }
+        .scrolling-container a {
+            display: block;
+            width: 150px;
+            height: 150px;
+            margin-right: 10px;
+        }
+        .scrolling-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 5s ease;
+        }
+        .scrolling-container img:hover {
+            transform: scale(1.1);
+        }
+        .scrolling-container:hover {
+            animation-play-state: paused;
+        }
+        @keyframes scroll {
+            from {
+                transform: translateX(0);
+            }
+            to {
+                transform: translateX(-50%);
+            }
+        }
+        #mainContent {
+            transition: margin-left 0.5s;
+            padding: 20px;
+            padding-top: 0px;
+        }
+        /* Media Queries */
+        @media (max-width: 768px) {
+            .search-bar input[type="text"] {
+                width: 200px;
+                font-size: 14px;
+            }
+            .search-bar button {
+                padding: 8px 16px;
+                font-size: 14px;
+            }
+        }
+        @media (max-width: 480px) {
+            .search-bar input[type="text"] {
+                width: 150px;
+                font-size: 12px;
+            }
+            .search-bar button {
+                padding: 6px 12px;
+                font-size: 12px;
+            }
+        }
+        footer {
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .social-icons {
+            margin-bottom: 20px;
+        }
+
+        .social-icons a {
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+        .additional-links a {
+            color: #fff;
+            text-decoration: none;
+            margin-right: 20px;
+        }
+
+        .additional-links a:hover {
+            color: #ffd700; /* Gold color on hover */
+        }
+
+        p {
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        /* Adjustments for smaller screens */
+        @media (max-width: 768px) {
+            .social-icons {
+                margin-bottom: 10px;
+            }
+
+            .additional-links a {
+                margin-right: 10px;
+            }
+
+            p {
+                font-size: 12px;
+            }
+        }
+        .social-icons img {
+    width: 30px; /* Adjust the width and height as needed */
+    height: 30px;
+    margin-right: 10px; /* Add some spacing between the icons */
+}
+
+/* LinkedIn icon color */
+.social-icons img:nth-of-type(1) {
+    filter: invert(27%) sepia(23%) saturate(3785%) hue-rotate(193deg) brightness(88%) contrast(89%);
+}
+
+/* Instagram icon color */
+.social-icons img:nth-of-type(2) {
+    filter: invert(43%) sepia(43%) saturate(2101%) hue-rotate(124deg) brightness(92%) contrast(90%);
+}
+
+/* WhatsApp icon color */
+.social-icons img:nth-of-type(3) {
+    filter: invert(23%) sepia(36%) saturate(2814%) hue-rotate(187deg) brightness(89%) contrast(88%);
+}
+</style>
+</head>
+<body>
+    <img class="image" src="logo-image.png" alt="Bucket Budget Logo">
+    <header>
+        <h1 class="Title">Store 1946</h1>
+    </header>
+    <nav>
+        <div class="scrolling-text-container">
+            <div class="scrolling-text">Welcome to Budget Marketing! Enjoy your store 1946 shopping experience!</div>
+        </div>
+    </nav>
+        <div class="search-bar">
+            <input id="searchInput" type="text" placeholder="Search for your shopping....">
+            <button id="searchButton" type="button">Search</button>
+            <div class="microphone">
+                <button type="button"><img src="mic.svg" alt="Microphone"></button>
+            </div>
+        </div>
+    </header>
+    <div class="menu-icon-container">
+        <svg id="menuIcon" xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
+        </svg>
+    </div>
+
+    <div id="sidebar" class="sidebar">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeSidebar()">&times;</a>
+        <a href="http://127.0.0.1:5500/Budget-Marketing.html">Home</a>
+        <a href="http://127.0.0.1:5500/Registration.html">Registration</a>
+        <a href="http://127.0.0.1:5500/profile%20page.html">Profile</a>
+        <a href="http://127.0.0.1:5500/add-to-cart.html">Add To Cart</a>
+        <a href="http://127.0.0.1:5500/order-success.html">Your Orders</a>
+        <a href="http://127.0.0.1:5500/Login.html" class="logout">Log Out</a>
+    </div>
+    <div id="mainContent">
+    <h2 class="clothes">Fashion World</h2><hr>
+    <div class="scrolling-wrapper">
+        <div class="scrolling-container">
+            <a href="http://127.0.0.1:5500/home%20image.html/dresses1.html"><img src="https://www.stylevore.com/wp-content/uploads/2022/08/AndreasCollections-26166142986742255.jpg" alt="Image 1"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/dresses2.html"><img src="https://i.ytimg.com/vi/NM0G8ApQzbI/oar2.jpg?sqp=-oaymwEkCOADENAFSFqQAgHyq4qpAxMIARUAAAAAJQAAyEI9AICiQ3gB&rs=AOn4CLCQU__-nb38fhbRCz5hD8D4dH3r9A" alt="Image 2"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/dresses3.html"><img src="https://i.pinimg.com/736x/6f/02/59/6f0259402ab4b2abce596756a7a23d54.jpg" alt="Image 3"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/dresses4.html"><img src="https://i.pinimg.com/originals/9a/8d/6a/9a8d6a38491faff1a6d17ff4f7cdb8e7.jpg" alt="Image 4"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/dresses5.html"><img src="https://i.pinimg.com/originals/88/4e/9a/884e9a886572d1a16c5c4c21021fd306.jpg" alt="Image 5"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/dresses6.html"><img src="https://guysworld.in/wp-content/uploads/2019/03/71ygO38MHFL._UL1500_.jpg" alt="Image 6"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/dresses7.html"><img src="https://i5.walmartimages.com/asr/86018013-08ed-485d-80a6-88a0d427a92b_1.1fb63d5b1329e2a78146373e85fc120e.jpeg" alt="Image 7"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/dresses8.html"><img src="https://www.dhresource.com/0x0/f2/albu/g10/M01/EA/81/rBVaWV66GNKALeI4AAVdDhwBnOw469.jpg" alt="Image 8"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/dresses9.html"><img src="https://i.pinimg.com/originals/7c/68/62/7c68621f7ea55403b33b62d890253b72.jpg" alt="Image 9"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/dresses10.html"><img src="https://i.pinimg.com/736x/eb/c2/9e/ebc29efe929954913267eda87d103b66.jpg" alt="Image 10"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/dresses11.html"><img src="https://dimg.dillards.com/is/image/DillardsZoom/zoom/calvin-klein-classic-fit-flare-leg-pants/04275671_zi_black.jpg" alt="Image 11"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/dresses12.html"><img src="https://cdnc.lystit.com/photos/size/12054510221-Navy-e0ccb747-.jpeg" alt="Image 12"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/dresses13.html"><img src="https://www.theleatherjacketer.com/wp-content/uploads/2020/11/mens-flight-bomber-aviator-leather-jacket-front.png" alt="Image 13"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/dresses14.html"><img src="https://1.bp.blogspot.com/-vGptgjLKptQ/UAgYpPMxcwI/AAAAAAAAAMg/I6FA_uy7GzE/s1600/143-460PARIS.jpg" alt="Image 14"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/dresses15.html"><img src="https://5.imimg.com/data5/SELLER/Default/2022/12/XC/SX/HZ/180197907/huddy-for-men-1000x1000.jpeg" alt="Image 15"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/dresses16.html"><img src="https://5.imimg.com/data5/SELLER/Default/2023/4/297302618/VH/OB/MF/45332558/men-goa-printed-shirt-1000x1000.jpeg" alt="Image 16"></a>
+        
+
+            <a href="http://127.0.0.1:5500/home%20image.html/dresses1.html"><img src="https://www.stylevore.com/wp-content/uploads/2022/08/AndreasCollections-26166142986742255.jpg" alt="Image 1"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/dresses2.html"><img src="https://i.ytimg.com/vi/NM0G8ApQzbI/oar2.jpg?sqp=-oaymwEkCOADENAFSFqQAgHyq4qpAxMIARUAAAAAJQAAyEI9AICiQ3gB&rs=AOn4CLCQU__-nb38fhbRCz5hD8D4dH3r9A" alt="Image 2"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/dresses3.html"><img src="https://i.pinimg.com/736x/6f/02/59/6f0259402ab4b2abce596756a7a23d54.jpg" alt="Image 3"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/dresses4.html"><img src="https://i.pinimg.com/originals/9a/8d/6a/9a8d6a38491faff1a6d17ff4f7cdb8e7.jpg" alt="Image 4"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/dresses5.html"><img src="https://i.pinimg.com/originals/88/4e/9a/884e9a886572d1a16c5c4c21021fd306.jpg" alt="Image 5"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/dresses6.html"><img src="https://guysworld.in/wp-content/uploads/2019/03/71ygO38MHFL._UL1500_.jpg" alt="Image 6"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/dresses7.html"><img src="https://i5.walmartimages.com/asr/86018013-08ed-485d-80a6-88a0d427a92b_1.1fb63d5b1329e2a78146373e85fc120e.jpeg" alt="Image 7"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/dresses8.html"><img src="https://www.dhresource.com/0x0/f2/albu/g10/M01/EA/81/rBVaWV66GNKALeI4AAVdDhwBnOw469.jpg" alt="Image 8"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/dresses9.html"><img src="https://i.pinimg.com/originals/7c/68/62/7c68621f7ea55403b33b62d890253b72.jpg" alt="Image 9"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/dresses10.html"><img src="https://i.pinimg.com/736x/eb/c2/9e/ebc29efe929954913267eda87d103b66.jpg" alt="Image 10"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/dresses11.html"><img src="https://dimg.dillards.com/is/image/DillardsZoom/zoom/calvin-klein-classic-fit-flare-leg-pants/04275671_zi_black.jpg" alt="Image 11"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/dresses12.html"><img src="https://cdnc.lystit.com/photos/size/12054510221-Navy-e0ccb747-.jpeg" alt="Image 12"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/dresses13.html"><img src="https://www.theleatherjacketer.com/wp-content/uploads/2020/11/mens-flight-bomber-aviator-leather-jacket-front.png" alt="Image 13"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/dresses14.html"><img src="https://1.bp.blogspot.com/-vGptgjLKptQ/UAgYpPMxcwI/AAAAAAAAAMg/I6FA_uy7GzE/s1600/143-460PARIS.jpg" alt="Image 14"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/dresses15.html"><img src="https://5.imimg.com/data5/SELLER/Default/2022/12/XC/SX/HZ/180197907/huddy-for-men-1000x1000.jpeg" alt="Image 15"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/dresses16.html"><img src="https://5.imimg.com/data5/SELLER/Default/2023/4/297302618/VH/OB/MF/45332558/men-goa-printed-shirt-1000x1000.jpeg" alt="Image 16"></a>
+    </div>
+</div>
+    <h2 class="clothes">Shoes</h2><hr>
+    <div class="scrolling-wrapper">
+        <div class="scrolling-container">
+            <a href="http://127.0.0.1:5500/home%20image.html/shoes1.html"><img src="https://www.febbuy.com/uploads/Nike_SB_Shoes/NIke_Dunk_SB_Hi/Nike_SFB_Jungle_Dunk_High_Men_Shoes_Lifestyle_Fashion_White_Blue_Black.jpg" alt="Image 1"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/shoes2.html"><img src="https://2.bp.blogspot.com/-di0bcQE1NOE/TabNtUe4rtI/AAAAAAAAAEs/NGotkBklOJw/s1600/adidas-shoes.jpg" alt="Image 2"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/shoes3.html"><img src="https://i8.amplience.net/i/office/4088108757_dt2.jpg?$highres$" alt="Image 3"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/shoes4.html"><img src="https://flyclipart.com/thumbs/sparx-gents-casual-shoes-sm-393-sparx-shoes-for-men-1525496.png" alt="Image 4"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/shoes5.html"><img src="https://images-na.ssl-images-amazon.com/images/I/81DzP9qBntL._UL1500_.jpg" alt="Image 5"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/shoes6.html"><img src="https://i.pinimg.com/originals/83/af/be/83afbefdb9beae8a3515a656fcc6ea39.jpg" alt="Image 6"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/shoes7.html"><img src="https://c4.wallpaperflare.com/wallpaper/881/453/138/accessory-elegance-fashion-footwear-wallpaper-preview.jpg" alt="Image 7"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/shoes8.html"><img src="https://3.bp.blogspot.com/-q_ByRQQGMNc/VduFOoSSewI/AAAAAAAAysM/a7xHsCyHH1w/s1600/Sexy-Beautiful-bride-champagne-color-lace-flower-and-crystal-satins-high-heeled-wedding-shoes-free-shipping.jpg" alt="Image 8"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/shoes9.html"><img src="https://wallpapercave.com/wp/wp2595318.jpg" alt="Image 9"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/shoes10.html"><img src="https://images4.fanpop.com/image/photos/23500000/awesome-womens-shoes-23559466-1000-1000.jpg" alt="Image 10"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/shoes11.html"><img src="https://getwallpapers.com/wallpaper/full/2/6/2/713133-cool-shoes-hd-wallpapers-2560x1600-ios.jpg" alt="Image 11"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/shoes12.html"><img src="https://academy.scene7.com/is/image/academy/20939367?$pdp-mobile-gallery-ng$" alt="Image 12"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/shoes13.html"><img src="https://c4.wallpaperflare.com/wallpaper/800/700/44/style-sneakers-asics-ronnie-fieg-gt-2-wallpaper-preview.jpg" alt="Image 13"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/shoes14.html"><img src="https://www.pngfind.com/pngs/m/180-1806000_brown-shoes-png-download-image-woodland-shoes-hd.png" alt="Image 14"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/shoes15.html"><img src="https://images-na.ssl-images-amazon.com/images/I/71c07JWyDGL._AC_UL1500_.jpg" alt="Image 15"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/shoes16.html"><img src="https://web3.orthoticshop.com/images/D/39-488-1.jpg" alt="Image 16"></a>
+        
+
+            <a href="http://127.0.0.1:5500/home%20image.html/shoes1.html"><img src="https://www.febbuy.com/uploads/Nike_SB_Shoes/NIke_Dunk_SB_Hi/Nike_SFB_Jungle_Dunk_High_Men_Shoes_Lifestyle_Fashion_White_Blue_Black.jpg" alt="Image 1"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/shoes2.html"><img src="https://2.bp.blogspot.com/-di0bcQE1NOE/TabNtUe4rtI/AAAAAAAAAEs/NGotkBklOJw/s1600/adidas-shoes.jpg" alt="Image 2"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/shoes3.html"><img src="https://i8.amplience.net/i/office/4088108757_dt2.jpg?$highres$" alt="Image 3"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/shoes4.html"><img src="https://flyclipart.com/thumbs/sparx-gents-casual-shoes-sm-393-sparx-shoes-for-men-1525496.png" alt="Image 4"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/shoes5.html"><img src="https://images-na.ssl-images-amazon.com/images/I/81DzP9qBntL._UL1500_.jpg" alt="Image 5"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/shoes6.html"><img src="https://i.pinimg.com/originals/83/af/be/83afbefdb9beae8a3515a656fcc6ea39.jpg" alt="Image 6"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/shoes7.html"><img src="https://c4.wallpaperflare.com/wallpaper/881/453/138/accessory-elegance-fashion-footwear-wallpaper-preview.jpg" alt="Image 7"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/shoes8.html"><img src="https://3.bp.blogspot.com/-q_ByRQQGMNc/VduFOoSSewI/AAAAAAAAysM/a7xHsCyHH1w/s1600/Sexy-Beautiful-bride-champagne-color-lace-flower-and-crystal-satins-high-heeled-wedding-shoes-free-shipping.jpg" alt="Image 8"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/shoes9.html"><img src="https://wallpapercave.com/wp/wp2595318.jpg" alt="Image 9"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/shoes10.html"><img src="https://images4.fanpop.com/image/photos/23500000/awesome-womens-shoes-23559466-1000-1000.jpg" alt="Image 10"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/shoes11.html"><img src="https://getwallpapers.com/wallpaper/full/2/6/2/713133-cool-shoes-hd-wallpapers-2560x1600-ios.jpg" alt="Image 11"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/shoes12.html"><img src="https://academy.scene7.com/is/image/academy/20939367?$pdp-mobile-gallery-ng$" alt="Image 12"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/shoes13.html"><img src="https://c4.wallpaperflare.com/wallpaper/800/700/44/style-sneakers-asics-ronnie-fieg-gt-2-wallpaper-preview.jpg" alt="Image 13"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/shoes14.html"><img src="https://www.pngfind.com/pngs/m/180-1806000_brown-shoes-png-download-image-woodland-shoes-hd.png" alt="Image 14"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/shoes15.html"><img src="https://images-na.ssl-images-amazon.com/images/I/71c07JWyDGL._AC_UL1500_.jpg" alt="Image 15"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/shoes16.html"><img src="https://web3.orthoticshop.com/images/D/39-488-1.jpg" alt="Image 16"></a>
+        </div>
+    </div>
+    <h2 class="clothes">Cosmetics</h2><hr>
+    <div class="scrolling-wrapper">
+        <div class="scrolling-container">
+            <a href="http://127.0.0.1:5500/home%20image.html/cosmetics1.html"><img src="https://wallpapercave.com/wp/wp1871593.jpg" alt="Image 1"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/cosmetics2.html"><img src="https://pluspng.com/img-png/nail-polish-png-hd-nail-polish-or-enamel-is-a-lacquer-consisting-of-ingredients-as-illustrated-in-the-table-below-varnishes-are-produced-in-a-variety-of-colours-and-1366.png" alt="Image 2"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/cosmetics3.html"><img src="https://wallpaperaccess.com/full/1190761.jpg" alt="Image 3"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/cosmetics4.html"><img src="https://imagiccosmetics.com/wp-content/uploads/2019/06/101.jpg" alt="Image 4"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/cosmetics5.html"><img src="https://glowwithnishi.com/wp-content/uploads/2020/05/lakme-sunscreen-1-1.jpg" alt="Image 5"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/cosmetics6.html"><img src="https://images8.alphacoders.com/392/392122.jpg" alt="Image 6"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/cosmetics7.html"><img src="https://imgix.bustle.com/uploads/image/2019/2/20/8652d27b-4515-43b7-ad39-61616008d6c4-50262137_1973401759629103_4424300259580251372_n.jpg?w=1080&h=600&fit=crop&crop=faces&auto=format%2Ccompress&cs=srgb&q=70" alt="Image 7"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/cosmetics8.html"><img src="https://springlab.co.uk/wp-content/uploads/2020/02/cosmetics.jpg" alt="Image 8"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/cosmetics9.html"><img src="https://c4.wallpaperflare.com/wallpaper/638/601/313/lipstick-shadows-black-background-brush-cosmetics-hd-wallpaper-preview.jpg" alt="Image 9"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/cosmetics10.html"><img src="https://wallpaperaccess.com/full/2537135.jpg" alt="Image 10"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/cosmetics11.html"><img src="https://cdn.wallpapersafari.com/50/89/sW1vQC.jpg" alt="Image 11"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/cosmetics12.html"><img src="https://png.pngtree.com/background/20230426/original/pngtree-makeup-cosmetic-products-on-white-surface-picture-image_2487143.jpg" alt="Image 12"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/cosmetics13.html"><img src="https://png.pngtree.com/background/20230427/original/pngtree-beauty-cosmetic-products-on-dark-background-picture-image_2496070.jpg" alt="Image 13"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/cosmetics14.html"><img src="https://i.pinimg.com/736x/52/0d/26/520d2663e04eb1fe3c0a6391ca892d2a.jpg" alt="Image 14"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/cosmetics15.html"><img src="https://images3.alphacoders.com/641/641460.jpg" alt="Image 15"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/cosmetics16.html"><img src="https://threadcurve.com/wp-content/uploads/2021/03/types-of-perfume-Mar222021-1-min.jpg" alt="Image 16"></a>
+
+            <a href="http://127.0.0.1:5500/home%20image.html/cosmetics1.html"><img src="https://wallpapercave.com/wp/wp1871593.jpg" alt="Image 1"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/cosmetics2.html"><img src="https://pluspng.com/img-png/nail-polish-png-hd-nail-polish-or-enamel-is-a-lacquer-consisting-of-ingredients-as-illustrated-in-the-table-below-varnishes-are-produced-in-a-variety-of-colours-and-1366.png" alt="Image 2"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/cosmetics3.html"><img src="https://wallpaperaccess.com/full/1190761.jpg" alt="Image 3"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/cosmetics4.html"><img src="https://imagiccosmetics.com/wp-content/uploads/2019/06/101.jpg" alt="Image 4"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/cosmetics5.html"><img src="https://glowwithnishi.com/wp-content/uploads/2020/05/lakme-sunscreen-1-1.jpg" alt="Image 5"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/cosmetics6.html"><img src="https://images8.alphacoders.com/392/392122.jpg" alt="Image 6"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/cosmetics7.html"><img src="https://imgix.bustle.com/uploads/image/2019/2/20/8652d27b-4515-43b7-ad39-61616008d6c4-50262137_1973401759629103_4424300259580251372_n.jpg?w=1080&h=600&fit=crop&crop=faces&auto=format%2Ccompress&cs=srgb&q=70" alt="Image 7"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/cosmetics8.html"><img src="https://springlab.co.uk/wp-content/uploads/2020/02/cosmetics.jpg" alt="Image 8"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/cosmetics9.html"><img src="https://c4.wallpaperflare.com/wallpaper/638/601/313/lipstick-shadows-black-background-brush-cosmetics-hd-wallpaper-preview.jpg" alt="Image 9"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/cosmetics10.html"><img src="https://wallpaperaccess.com/full/2537135.jpg" alt="Image 10"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/cosmetics11.html"><img src="https://cdn.wallpapersafari.com/50/89/sW1vQC.jpg" alt="Image 11"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/cosmetics12.html"><img src="https://png.pngtree.com/background/20230426/original/pngtree-makeup-cosmetic-products-on-white-surface-picture-image_2487143.jpg" alt="Image 12"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/cosmetics13.html"><img src="https://png.pngtree.com/background/20230427/original/pngtree-beauty-cosmetic-products-on-dark-background-picture-image_2496070.jpg" alt="Image 13"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/cosmetics14.html"><img src="https://i.pinimg.com/736x/52/0d/26/520d2663e04eb1fe3c0a6391ca892d2a.jpg" alt="Image 14"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/cosmetics15.html"><img src="https://images3.alphacoders.com/641/641460.jpg" alt="Image 15"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/cosmetics16.html"><img src="https://threadcurve.com/wp-content/uploads/2021/03/types-of-perfume-Mar222021-1-min.jpg" alt="Image 16"></a>
+        </div>
+    </div>
+    <h2 class="clothes">Gadgets & Home-Uses</h2><hr>
+    <div class="scrolling-wrapper">
+        <div class="scrolling-container">
+            <a href="http://127.0.0.1:5500/home%20image.html/gadgets1.html"><img src="https://wallpaperaccess.com/full/3570163.jpg" alt="Image 1"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/gadgets2.html"><img src="https://cdn.wallpapersafari.com/80/79/KfzcoP.jpg" alt="Image 2"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/gadgets3.html"><img src="https://wallpapercave.com/wp/wp4185691.jpg" alt="Image 3"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/gadgets4.html "><img src="https://wallpapercave.com/wp/wp4185724.jpg" alt="Image 4"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/gadgets5.html"><img src="https://www.pngplay.com/wp-content/uploads/12/Frying-Pan-PNG-HD-Free-File-Download.png" alt="Image 5"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/gadgets6.html"><img src="https://cdn.shopify.com/s/files/1/2102/1927/products/81AKlOUHvq3L_1024x1024.png?v=1591811422" alt="Image 6"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/gadgets7.html"><img src="https://images-na.ssl-images-amazon.com/images/I/81w2SuGjAHL._SL1500_.jpg" alt="Image 7"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/gadgets8.html"><img src="https://bestkitchensreviews.com/wp-content/uploads/2019/07/Rotimatic-Automatic-Roti-Maker-Machine.jpg" alt="Image 8"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/gadgets9.html"><img src="https://lunchboxreport.com/wp-content/uploads/2021/01/Qualitas-3-compartment-1024x984.jpg" alt="Image 9"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/gadgets10.html"><img src="https://img.freepik.com/premium-photo/lunch-box-hd-8k-wallpaper-stock-photographic-image_853645-67003.jpg" alt="Image 10"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/gadgets11.html"><img src="https://assetscdn.paytm.com/images/catalog/product/H/HO/HOMMILTON-CUBE-VALU27056DB84C6A9/1565000792004_0..jpg" alt="Image 11"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/gadgets12.html"><img src="https://i5.walmartimages.com/asr/0254da59-5691-44f3-8412-5f7420c75441.e065dba99531fc16b8262a3ec956b1ba.jpeg?odnWidth=1000&odnHeight=1000&odnBg=ffffff" alt="Image 12"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/gadgets13.html"><img src="https://3.imimg.com/data3/HA/TU/MY-10543402/kitchenware-sets.jpg" alt="Image 13"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/gadgets14.html"><img src="https://gembah.com/wp-content/uploads/2022/07/home-kitchen-gadgets-scaled-1.jpeg" alt="Image 14"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/gadgets15.html"><img src="https://images-na.ssl-images-amazon.com/images/I/91aSbOYqFIL._SL1500_.jpg" alt="Image 15"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/gadgets16.html"><img src="https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6328/6328099ld.jpg" alt="Image 16"></a>
+
+            <a href="http://127.0.0.1:5500/home%20image.html/gadgets1.html"><img src="https://wallpaperaccess.com/full/3570163.jpg" alt="Image 1"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/gadgets2.html"><img src="https://cdn.wallpapersafari.com/80/79/KfzcoP.jpg" alt="Image 2"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/gadgets3.html"><img src="https://wallpapercave.com/wp/wp4185691.jpg" alt="Image 3"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/gadgets4.html "><img src="https://wallpapercave.com/wp/wp4185724.jpg" alt="Image 4"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/gadgets5.html"><img src="https://www.pngplay.com/wp-content/uploads/12/Frying-Pan-PNG-HD-Free-File-Download.png" alt="Image 5"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/gadgets6.html"><img src="https://cdn.shopify.com/s/files/1/2102/1927/products/81AKlOUHvq3L_1024x1024.png?v=1591811422" alt="Image 6"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/gadgets7.html"><img src="https://images-na.ssl-images-amazon.com/images/I/81w2SuGjAHL._SL1500_.jpg" alt="Image 7"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/gadgets8.html"><img src="https://bestkitchensreviews.com/wp-content/uploads/2019/07/Rotimatic-Automatic-Roti-Maker-Machine.jpg" alt="Image 8"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/gadgets9.html"><img src="https://lunchboxreport.com/wp-content/uploads/2021/01/Qualitas-3-compartment-1024x984.jpg" alt="Image 9"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/gadgets10.html"><img src="https://img.freepik.com/premium-photo/lunch-box-hd-8k-wallpaper-stock-photographic-image_853645-67003.jpg" alt="Image 10"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/gadgets11.html"><img src="https://assetscdn.paytm.com/images/catalog/product/H/HO/HOMMILTON-CUBE-VALU27056DB84C6A9/1565000792004_0..jpg" alt="Image 11"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/gadgets12.html"><img src="https://i5.walmartimages.com/asr/0254da59-5691-44f3-8412-5f7420c75441.e065dba99531fc16b8262a3ec956b1ba.jpeg?odnWidth=1000&odnHeight=1000&odnBg=ffffff" alt="Image 12"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/gadgets13.html"><img src="https://3.imimg.com/data3/HA/TU/MY-10543402/kitchenware-sets.jpg" alt="Image 13"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/gadgets14.html"><img src="https://gembah.com/wp-content/uploads/2022/07/home-kitchen-gadgets-scaled-1.jpeg" alt="Image 14"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/gadgets15.html"><img src="https://images-na.ssl-images-amazon.com/images/I/91aSbOYqFIL._SL1500_.jpg" alt="Image 15"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/gadgets16.html"><img src="https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6328/6328099ld.jpg" alt="Image 16"></a>
+        </div>
+    </div>
+    <h2 class="clothes">Vegetables</h2><hr>
+    <div class="scrolling-wrapper">
+        <div class="scrolling-container">
+            <a href="http://127.0.0.1:5500/home%20image.html/vegetable1.html"><img src="https://images5.alphacoders.com/368/368817.jpg" alt="Image 1"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/vegetable2.html"><img src="https://getwallpapers.com/wallpaper/full/4/c/f/1419016-potato-wallpapers-2560x1440-for-mac.jpg" alt="Image 2"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/vegetable3.html"><img src="https://wallpapercave.com/wp/wp2378913.jpg" alt="Image 3"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/vegetable4.html"><img src="https://bivianodirect.com.au/wp-content/uploads/2020/06/products-A6D0DF72-8722-474B-BA93-45071A0C7559.jpg" alt="Image 4"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/vegetable5.html"><img src="https://1.bp.blogspot.com/-twpj0AZMsWo/VLJFTATb9tI/AAAAAAAAKpo/PuPhR0NfeP8/s1600/eggplant.jpg" alt="Image 5"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/vegetable6.html"><img src="https://wallpaperaccess.com/full/1912934.jpg" alt="Image 6"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/vegetable7.html"><img src="https://wallpapercave.com/wp/wp3145613.jpg" alt="Image 7"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/vegetable8.html"><img src="https://images6.alphacoders.com/658/658529.jpg" alt="Image 8"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/vegetable9.html"><img src="https://www.thespruce.com/thmb/AGqD-ZcXtOTxvlagSuFtRQ8SJ4w=/4696x3130/filters:fill(auto,1)/how-to-grow-cauliflower-1403494-hero-76cf5f524a564adabb1ac6adfa311482.jpg" alt="Image 9"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/vegetable10.html"><img src="https://c1.wallpaperflare.com/preview/623/345/101/green-beans-vegetables-garden-bio.jpg" alt="Image 10"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/vegetable11.html"><img src="https://www.crystalvalleyfoods.com/wp-content/uploads/2017/05/Colored-Bell-Peppers-1.jpg" alt="Image 11"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/vegetable12.html"><img src="https://www.finedininglovers.com/sites/g/files/xknfdk626/files/2020-12/raw_white_daikon_radish%C2%A9iStock.jpg" alt="Image 12"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/vegetable13.html"><img src="https://www.newhealthadvisor.org/images/1HT03811/PART1.png" alt="Image 13"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/vegetable14.html"><img src="https://wallpapercave.com/wp/wp8606204.jpg" alt="Image 14"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/vegetable15.html"><img src="https://watermark.lovepik.com/photo/20211130/large/lovepik-garlic-picture_501243231.jpg" alt="Image 15"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/vegetable16.html"><img src="https://wallpapers.com/images/hd/raw-vegetable-collard-greens-macro-shot-lvirgvy4pao5jnwa.jpg" alt="Image 16"></a>
+
+            <a href="http://127.0.0.1:5500/home%20image.html/vegetable1.html"><img src="https://images5.alphacoders.com/368/368817.jpg" alt="Image 1"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/vegetable2.html"><img src="https://getwallpapers.com/wallpaper/full/4/c/f/1419016-potato-wallpapers-2560x1440-for-mac.jpg" alt="Image 2"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/vegetable3.html"><img src="https://wallpapercave.com/wp/wp2378913.jpg" alt="Image 3"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/vegetable4.html"><img src="https://bivianodirect.com.au/wp-content/uploads/2020/06/products-A6D0DF72-8722-474B-BA93-45071A0C7559.jpg" alt="Image 4"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/vegetable5.html"><img src="https://1.bp.blogspot.com/-twpj0AZMsWo/VLJFTATb9tI/AAAAAAAAKpo/PuPhR0NfeP8/s1600/eggplant.jpg" alt="Image 5"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/vegetable6.html"><img src="https://wallpaperaccess.com/full/1912934.jpg" alt="Image 6"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/vegetable7.html"><img src="https://wallpapercave.com/wp/wp3145613.jpg" alt="Image 7"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/vegetable8.html"><img src="https://images6.alphacoders.com/658/658529.jpg" alt="Image 8"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/vegetable9.html"><img src="https://www.thespruce.com/thmb/AGqD-ZcXtOTxvlagSuFtRQ8SJ4w=/4696x3130/filters:fill(auto,1)/how-to-grow-cauliflower-1403494-hero-76cf5f524a564adabb1ac6adfa311482.jpg" alt="Image 9"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/vegetable10.html"><img src="https://c1.wallpaperflare.com/preview/623/345/101/green-beans-vegetables-garden-bio.jpg" alt="Image 10"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/vegetable11.html"><img src="https://www.crystalvalleyfoods.com/wp-content/uploads/2017/05/Colored-Bell-Peppers-1.jpg" alt="Image 11"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/vegetable12.html"><img src="https://www.finedininglovers.com/sites/g/files/xknfdk626/files/2020-12/raw_white_daikon_radish%C2%A9iStock.jpg" alt="Image 12"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/vegetable13.html"><img src="https://www.newhealthadvisor.org/images/1HT03811/PART1.png" alt="Image 13"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/vegetable14.html"><img src="https://wallpapercave.com/wp/wp8606204.jpg" alt="Image 14"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/vegetable15.html"><img src="https://watermark.lovepik.com/photo/20211130/large/lovepik-garlic-picture_501243231.jpg" alt="Image 15"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/vegetable16.html"><img src="https://wallpapers.com/images/hd/raw-vegetable-collard-greens-macro-shot-lvirgvy4pao5jnwa.jpg" alt="Image 16"></a>
+        </div>
+    </div>
+    <h2 class="clothes">Fruitsage</h2><hr>
+    <div class="scrolling-wrapper">
+        <div class="scrolling-container">
+            <a href="http://127.0.0.1:5500/home%20image.html/fruit1.html"><img src="https://www.wallpaperflare.com/static/947/293/305/pple-leaves-tail-slice-wallpaper.jpg" alt="Image 1"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/fruit2.html"><img src="https://images8.alphacoders.com/407/407968.jpg" alt="Image 2"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/fruit3.html"><img src="https://www.kindpng.com/picc/m/111-1113758_banana-fruit-hd-png-download.png" alt="Image 3"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/fruit4.html"><img src="https://watermark.lovepik.com/photo/20211129/large/lovepik-guava-guava-picture_501181577.jpg" alt="Image 4"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/fruit5.html"><img src="https://pluspng.com/img-png/watermelon-hd-png-download-png-image-watermelon-png-image-3586.png" alt="Image 5"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/fruit6.html"><img src="https://images6.alphacoders.com/368/368747.jpg" alt="Image 6"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/fruit7.html"><img src="https://thrivemeetings.com/wp-content/uploads/2017/06/iStock-177546268.jpg" alt="Image 7"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/fruit8.html"><img src="https://wallpapercave.com/wp/wp2726133.jpg" alt="Image 8"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/fruit9.html"><img src="https://2.bp.blogspot.com/-WPTf4Wy5P3E/UGqrWeHD2OI/AAAAAAAAFDQ/xWTYFG2qK5k/s1600/Fresh-Strawberries-Macro-Fruit-Photography-HD-Wallpaper--Vvallpaper.Net.jpg" alt="Image 9"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/fruit10.html"><img src="https://images2.alphacoders.com/872/thumb-1920-872354.jpg" alt="Image 10"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/fruit11.html"><img src="https://wallpaperaccess.com/full/1971387.jpg" alt="Image 11"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/fruit12.html"><img src="https://wallpapers-all.com/uploads/posts/2017-03/16_plum.jpg" alt="Image 12"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/fruit13.html"><img src="https://wallpapercave.com/wp/wp4459414.jpg" alt="Image 13"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/fruit14.html"><img src="https://images5.alphacoders.com/358/358733.jpg" alt="Image 14"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/fruit15.html"><img src="https://wallpaperaccess.com/full/3624783.jpg" alt="Image 15"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/fruit16.html"><img src="https://wallpapercave.com/wp/wp7407629.jpg" alt="Image 16"></a>
+
+            <a href="http://127.0.0.1:5500/home%20image.html/fruit1.html"><img src="https://www.wallpaperflare.com/static/947/293/305/pple-leaves-tail-slice-wallpaper.jpg" alt="Image 1"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/fruit2.html"><img src="https://images8.alphacoders.com/407/407968.jpg" alt="Image 2"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/fruit3.html"><img src="https://www.kindpng.com/picc/m/111-1113758_banana-fruit-hd-png-download.png" alt="Image 3"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/fruit4.html"><img src="https://watermark.lovepik.com/photo/20211129/large/lovepik-guava-guava-picture_501181577.jpg" alt="Image 4"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/fruit5.html"><img src="https://pluspng.com/img-png/watermelon-hd-png-download-png-image-watermelon-png-image-3586.png" alt="Image 5"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/fruit6.html"><img src="https://images6.alphacoders.com/368/368747.jpg" alt="Image 6"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/fruit7.html"><img src="https://thrivemeetings.com/wp-content/uploads/2017/06/iStock-177546268.jpg" alt="Image 7"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/fruit8.html"><img src="https://wallpapercave.com/wp/wp2726133.jpg" alt="Image 8"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/fruit9.html"><img src="https://2.bp.blogspot.com/-WPTf4Wy5P3E/UGqrWeHD2OI/AAAAAAAAFDQ/xWTYFG2qK5k/s1600/Fresh-Strawberries-Macro-Fruit-Photography-HD-Wallpaper--Vvallpaper.Net.jpg" alt="Image 9"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/fruit10.html"><img src="https://images2.alphacoders.com/872/thumb-1920-872354.jpg" alt="Image 10"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/fruit11.html"><img src="https://wallpaperaccess.com/full/1971387.jpg" alt="Image 11"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/fruit12.html"><img src="https://wallpapers-all.com/uploads/posts/2017-03/16_plum.jpg" alt="Image 12"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/fruit13.html"><img src="https://wallpapercave.com/wp/wp4459414.jpg" alt="Image 13"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/fruit14.html"><img src="https://images5.alphacoders.com/358/358733.jpg" alt="Image 14"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/fruit15.html"><img src="https://wallpaperaccess.com/full/3624783.jpg" alt="Image 15"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/fruit16.html"><img src="https://wallpapercave.com/wp/wp7407629.jpg" alt="Image 16"></a>
+        </div>
+    </div>
+    <h2 class="clothes">Soft-Drinks</h2><hr>
+    <div class="scrolling-wrapper">
+        <div class="scrolling-container">
+            <a href="http://127.0.0.1:5500/home%20image.html/drink1.html"><img src="https://www.pixelstalk.net/wp-content/uploads/2016/08/HD-Coca-Cola-Photos.jpg" alt="Image 1"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/drink2.html"><img src="https://5.imimg.com/data5/SELLER/Default/2022/6/RP/YA/VZ/27715606/thum-s-up-15124224444--1000x1000.jpg" alt="Image 2"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/drink3.html"><img src="https://www.hccb.in/images/limca-blog.jpg" alt="Image 3"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/drink4.html"><img src="https://c1.wallpaperflare.com/preview/98/990/331/cans-drinks-orange-juice-splash.jpg" alt="Image 4"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/drink5.html"><img src="https://cdnprod.mafretailproxy.com/sys-master-root/h5d/hb5/13976828674078/1754421_main.jpg_1700Wx1700H" alt="Image 5"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/drink6.html"><img src="https://getwallpapers.com/wallpaper/full/7/7/e/1051595-best-red-bull-wallpaper-2560x1600.jpg" alt="Image 6"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/drink7.html"><img src="https://wallpaperaccess.com/full/1195665.jpg" alt="Image 7"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/drink8.html"><img src="https://cdnprod.mafretailproxy.com/sys-master-root/h1a/h95/26689729462302/1806747_main.jpg_480Wx480H" alt="Image 8"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/drink9.html"><img src="https://www.spencers.in/media/catalog/product/1/3/1317871.jpg" alt="Image 9"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/drink10.html"><img src="https://wallpapercave.com/wp/wp4008108.jpg" alt="Image 10"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/drink11.html"><img src="https://i.ytimg.com/vi/rCkrnvjbZKQ/maxresdefault.jpg" alt="Image 11"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/drink12.html"><img src="https://m.media-amazon.com/images/S/aplus-media-library-service-media/ff48d59b-4923-4fff-86b6-abf44dc0cf51.__CR0,0,970,600_PT0_SX970_V1___.jpg" alt="Image 12"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/drink13.html"><img src="https://i.pinimg.com/originals/53/88/41/538841cf04f028b3e95e746fc19a6786.jpg" alt="Image 13"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/drink14.html"><img src="https://wallpapercave.com/wp/wp9001148.jpg" alt="Image 14"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/drink15.html"><img src="https://www.korestudios.com/wp-content/uploads/2017/02/7up-cold-glass.jpg" alt="Image 15"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/drink16.html"><img src="https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=85,metadata=none,w=480,h=480/app/images/products/sliding_image/484058a.jpg" alt="Image 16"></a>
+
+            <a href="http://127.0.0.1:5500/home%20image.html/drink1.html"><img src="https://www.pixelstalk.net/wp-content/uploads/2016/08/HD-Coca-Cola-Photos.jpg" alt="Image 1"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/drink2.html"><img src="https://5.imimg.com/data5/SELLER/Default/2022/6/RP/YA/VZ/27715606/thum-s-up-15124224444--1000x1000.jpg" alt="Image 2"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/drink3.html"><img src="https://www.hccb.in/images/limca-blog.jpg" alt="Image 3"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/drink4.html"><img src="https://c1.wallpaperflare.com/preview/98/990/331/cans-drinks-orange-juice-splash.jpg" alt="Image 4"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/drink5.html"><img src="https://cdnprod.mafretailproxy.com/sys-master-root/h5d/hb5/13976828674078/1754421_main.jpg_1700Wx1700H" alt="Image 5"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/drink6.html"><img src="https://getwallpapers.com/wallpaper/full/7/7/e/1051595-best-red-bull-wallpaper-2560x1600.jpg" alt="Image 6"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/drink7.html"><img src="https://wallpaperaccess.com/full/1195665.jpg" alt="Image 7"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/drink8.html"><img src="https://cdnprod.mafretailproxy.com/sys-master-root/h1a/h95/26689729462302/1806747_main.jpg_480Wx480H" alt="Image 8"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/drink9.html"><img src="https://www.spencers.in/media/catalog/product/1/3/1317871.jpg" alt="Image 9"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/drink10.html"><img src="https://wallpapercave.com/wp/wp4008108.jpg" alt="Image 10"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/drink11.html"><img src="https://i.ytimg.com/vi/rCkrnvjbZKQ/maxresdefault.jpg" alt="Image 11"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/drink12.html"><img src="https://m.media-amazon.com/images/S/aplus-media-library-service-media/ff48d59b-4923-4fff-86b6-abf44dc0cf51.__CR0,0,970,600_PT0_SX970_V1___.jpg" alt="Image 12"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/drink13.html"><img src="https://i.pinimg.com/originals/53/88/41/538841cf04f028b3e95e746fc19a6786.jpg" alt="Image 13"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/drink14.html"><img src="https://wallpapercave.com/wp/wp9001148.jpg" alt="Image 14"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/drink15.html"><img src="https://www.korestudios.com/wp-content/uploads/2017/02/7up-cold-glass.jpg" alt="Image 15"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/drink16.html"><img src="https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=85,metadata=none,w=480,h=480/app/images/products/sliding_image/484058a.jpg" alt="Image 16"></a>
+        </div>
+    </div>
+    <h2 class="clothes">Food Stuff</h2><hr>
+    <div class="scrolling-wrapper">
+        <div class="scrolling-container">
+            <a href="http://127.0.0.1:5500/home%20image.html/food1.html"><img src="https://wallpaperaccess.com/full/1972917.jpg" alt="Image 1"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/food2.html"><img src="https://www.blueberriesfoods.com/wp-content/uploads/2018/10/Fish-Curry-1.png" alt="Image 2"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/food3.html"><img src="https://i.ytimg.com/vi/G_B1Py4dNR8/maxresdefault.jpg" alt="Image 3"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/food4.html"><img src="https://i0.wp.com/yourfoodfantasy.com/wp-content/uploads/2017/12/Ginger-Garlic-Prawns-Curry-Recipe-Your-Food-Fantasy.jpg?fit=2614%2C1880&ssl=1" alt="Image 4"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/food5.html"><img src="https://i.ytimg.com/vi/QDKjQpFOJ6c/maxresdefault.jpg" alt="Image 5"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/food6.html"><img src="https://2.bp.blogspot.com/--GPpde9gY0s/U5SACGYUfAI/AAAAAAAANz4/GnZYwqW0NRM/s1600/mushroom_pea_curry1.jpg" alt="Image 6"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/food7.html"><img src="https://www.rasoirani.com/wp-content/uploads/2020/03/methi-chaman-recipe.jpg" alt="Image 7"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/food8.html"><img src="https://media.architecturaldigest.in/wp-content/uploads/2020/02/vegetarian-thali-mumbai-restautants_5.jpg" alt="Image 8"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/food9.html"><img src="https://www.archanaskitchen.com/images/archanaskitchen/0-Archanas-Kitchen-Recipes/2016/1-Archana/Spicy_Vegetable_Noodles_Recipe-1.jpg" alt="Image 9"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/food10.html"><img src="https://images.alphacoders.com/130/thumb-1920-1308370.jpg" alt="Image 10"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/food11.html"><img src="https://loveisinmytummy.com/wp-content/uploads/2016/08/Brinjal-curry-Main.jpg" alt="Image 11"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/food12.html"><img src="https://4.bp.blogspot.com/-LBvvFHoTBLA/VYh1w_n3ViI/AAAAAAAALyM/AblgMi5M_jw/s1600/peasmasala2.JPG" alt="Image 12"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/food13.html"><img src="https://www.whiskaffair.com/wp-content/uploads/2020/04/Kerala-Egg-Curry-3.jpg" alt="Image 13"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/food14.html"><img src="https://i.ytimg.com/vi/8sZc9CkVxYU/maxresdefault.jpg" alt="Image 14"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/food15.html"><img src="https://www.youngisthan.in/wp-content/uploads/2017/02/sambar.jpg" alt="Image 15"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/food16.html"><img src="https://eventorganizers.in/wp-content/uploads/2022/02/tiffins-live-stall-in-hyderabad-for-all-parties.jpg" alt="Image 16"></a>
+
+            <a href="http://127.0.0.1:5500/home%20image.html/food1.html"><img src="https://wallpaperaccess.com/full/1972917.jpg" alt="Image 1"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/food2.html"><img src="https://www.blueberriesfoods.com/wp-content/uploads/2018/10/Fish-Curry-1.png" alt="Image 2"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/food3.html"><img src="https://i.ytimg.com/vi/G_B1Py4dNR8/maxresdefault.jpg" alt="Image 3"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/food4.html"><img src="https://i0.wp.com/yourfoodfantasy.com/wp-content/uploads/2017/12/Ginger-Garlic-Prawns-Curry-Recipe-Your-Food-Fantasy.jpg?fit=2614%2C1880&ssl=1" alt="Image 4"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/food5.html"><img src="https://i.ytimg.com/vi/QDKjQpFOJ6c/maxresdefault.jpg" alt="Image 5"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/food6.html"><img src="https://2.bp.blogspot.com/--GPpde9gY0s/U5SACGYUfAI/AAAAAAAANz4/GnZYwqW0NRM/s1600/mushroom_pea_curry1.jpg" alt="Image 6"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/food7.html"><img src="https://www.rasoirani.com/wp-content/uploads/2020/03/methi-chaman-recipe.jpg" alt="Image 7"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/food8.html"><img src="https://media.architecturaldigest.in/wp-content/uploads/2020/02/vegetarian-thali-mumbai-restautants_5.jpg" alt="Image 8"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/food9.html"><img src="https://www.archanaskitchen.com/images/archanaskitchen/0-Archanas-Kitchen-Recipes/2016/1-Archana/Spicy_Vegetable_Noodles_Recipe-1.jpg" alt="Image 9"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/food10.html"><img src="https://images.alphacoders.com/130/thumb-1920-1308370.jpg" alt="Image 10"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/food11.html"><img src="https://loveisinmytummy.com/wp-content/uploads/2016/08/Brinjal-curry-Main.jpg" alt="Image 11"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/food12.html"><img src="https://4.bp.blogspot.com/-LBvvFHoTBLA/VYh1w_n3ViI/AAAAAAAALyM/AblgMi5M_jw/s1600/peasmasala2.JPG" alt="Image 12"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/food13.html"><img src="https://www.whiskaffair.com/wp-content/uploads/2020/04/Kerala-Egg-Curry-3.jpg" alt="Image 13"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/food14.html"><img src="https://i.ytimg.com/vi/8sZc9CkVxYU/maxresdefault.jpg" alt="Image 14"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/food15.html"><img src="https://www.youngisthan.in/wp-content/uploads/2017/02/sambar.jpg" alt="Image 15"></a>
+            <a href="http://127.0.0.1:5500/home%20image.html/food16.html"><img src="https://eventorganizers.in/wp-content/uploads/2022/02/tiffins-live-stall-in-hyderabad-for-all-parties.jpg" alt="Image 16"></a>
+        </div>
+    </div>
+</div>
+    <script>
+         
+         function openSidebar() {
+            document.getElementById("sidebar").style.transform = "translateX(0)";
+            document.getElementById("mainContainer").style.marginLeft = "250px";
+        }
+    
+        function closeSidebar() {
+            document.getElementById("sidebar").style.transform = "translateX(-250px)";
+            document.getElementById("mainContainer").style.marginLeft = "0";
+        }
+    
+        document.getElementById("menuIcon").addEventListener("click", openSidebar);
+    
+        document.getElementById("searchButton").addEventListener("click", function() {
+            const query = document.getElementById("searchInput").value.toLowerCase();
+            if (query === "Clothes" ||query ===  "clothes" ||query ===  "Dresses" ||query ===  "dresses" ||query === "Clothes." ||query ===  "clothes." ||query ===  "Dresses." ||query ===  "dresses.") {
+                window.location.href = "http://127.0.0.1:5500/Fashion%20World.html"; 
+            } else if (query === "Shoes" ||query ===  "shoes" ||query ===  "Shoes." ||query ===  "shoes.") {
+                window.location.href = "http://127.0.0.1:5500/shoes.html";
+            } else if (query === "Cosmetics" ||query ===  "cosmetics" ||query ===  "Cosmetics." ||query ===  "cosmetics.") {
+                window.location.href = "http://127.0.0.1:5500/Cosmetics.html";
+            } else if (query === "Gadgets" ||query ===  "gadgets" ||query ===  "HomeUses" ||query === "Home-Uses" ||query ===  "homeuses" ||query ===  "home-uses" ||query ===  "Home Uses" ||query ===  "Home uses" ||query ===  "Home-uses" ||query ===  "home-Uses" ||query ===  "Gadgets." ||query ===  "gadgets." ||query ===  "HomeUses." ||query === "Home-Uses." ||query ===  "homeuses." ||query ===  "home-uses." ||query ===  "Home Uses." ||query ===  "Home uses." ||query ===  "Home-uses." ||query ===  "home-Uses." ||query ===  "HouseUses" ||query === "House-Uses" ||query ===  "houseuses" ||query ===  "house-uses" ||query ===  "House Uses" ||query ===  "House uses" ||query ===  "House-uses" ||query ===  "house-Uses") {
+                window.location.href = "http://127.0.0.1:5500/Gadgets.html";
+            } else if (query === "Vegetables" ||query ===  "vegetables" ||query ===  "Vegetables." ||query ===  "vegetables.") {
+                window.location.href = "http://127.0.0.1:5500/Vegetables.html";
+            } else if (query === "Fruits" ||query ===  "fruits" ||query === "Fruits." ||query === "fruits.") {
+                window.location.href = "http://127.0.0.1:5500/Fruits.html";
+            } else if (query === "Soft Drinks" ||query ===  "Soft-Drinks" ||query ===  "SoftDrinks" ||query ===  "Softdrinks" ||query ===  "soft Drinks" ||query ===  "soft drinks" ||query ===  "soft-drinks" ||query ===  "Soft-drinks" ||query ===  "soft-Drinks" ||query ===  "Soft Drinks." ||query ===  "Soft-Drinks." ||query ===  "SoftDrinks." ||query ===  "Softdrinks." ||query ===  "soft Drinks." ||query ===  "soft drinks." ||query ===  "soft-drinks." ||query ===  "Soft-drinks." ||query ===  "soft-Drinks.") {
+                window.location.href = "http://127.0.0.1:5500/Soft-Drinks.Html";
+            } else if (query === "Food" ||query ===  "food" ||query ===  "Food." ||query ===  "food.") {
+                window.location.href = "http://127.0.0.1:5500/Food.Html";
+            } else if (query === "Men-Shirts" ||query === "men-shirts" ||query === "Men Shirts." ||query === "Men shirts." ||query === "MenShirts." ||query === "Menshirts" ||query === "menshirts") {
+                    window.location.href = "http://127.0.0.1:5500/Men%20Shirts.html";
+                } else if (query === "Women-Shirts" ||query === "women-shirts" ||query === "Women Shirts." ||query === " women shirts." ||query === "WomenShirts." ||query === "Womenshirts" ||query === "womenshirts") {
+                    window.location.href = "http://127.0.0.1:5500/Women-Shirts.html";
+                } else if (query ===  "Men-Pants" ||query === "men-pants" ||query === "Men Pants." ||query === "men pants." ||query === "MenPants." ||query === "Menpants" ||query === "menpants") {
+                    window.location.href = "http://127.0.0.1:5500/Men-Pants.html";
+                } else if (query === "Women-Pants" ||query === "women-pants" ||query === "Women Pants." ||query === " women pants." ||query === "WomenPants." ||query === "Womenpants" ||query === "womenpants"){
+                    window.location.href = "http://127.0.0.1:5500/Women-Pants.html";
+                } else if (query === "Men-TShirts" ||query === "men-tshirts" ||query === "Men TShirts." ||query === "men tshirts." ||query === "MenTShirts." ||query === "Mentshirts" ||query === "mentshirts") {
+                    window.location.href = "http://127.0.0.1:5500/Men-Tshirt.html";
+                } else if (query === "Women-TShirts" ||query === "women-tshirts" ||query === "Women TShirts." ||query === " women tshirts." ||query === "WomenTShirts." ||query === "Womentshirts" ||query === "womentshirts") {
+                    window.location.href = "http://127.0.0.1:5500/Women-Tshirts.html";
+                } else if (query === "Shirts" ||query === "shirts" ||query === "Shirts." ||query === "shirts." ||query === "Shirts." ||query === "shirts" ||query === "shirts") {
+                    window.location.href = "http://127.0.0.1:5500/shirts.html";
+                } else if (query === "T-Shirts." ||query === "T-Shirts" ||query === "TShirts." ||query === "tshirts." ||query === "TShirts." ||query === "tshirts" ||query === "Tshirts" ||query === "T-Shirts" ||query === "TShirts" ||query === "T-shirts" ||query === "T-shirts." ) {
+                    window.location.href = "http://127.0.0.1:5500/T-Shirts.html";
+                } else if (query ===  "Pants" ||query === "pants" ||query === "Pants." ||query === "pants." ||query === "Pants." ||query === "pants" ||query === "pants") {
+                    window.location.href = "http://127.0.0.1:5500/pants.html";
+                } else {
+                    alert("Page not found.");
+                }
+        });
+        document.querySelector('.microphone button').addEventListener('click', function() {
+            var recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+            recognition.lang = 'en-US';
+            recognition.interimResults = false;
+            recognition.maxAlternatives = 1;
+
+            recognition.start();
+
+            recognition.onresult = function(event) {
+                var speechResult = event.results[0][0].transcript;
+                document.getElementById('searchInput').value = speechResult;
+            };
+
+            recognition.onerror = function(event) {
+                console.error('Speech recognition error detected: ' + event.error);
+            };
+
+            recognition.onspeechend = function() {
+                recognition.stop();
+            };
+        });
+     </script>
+</div>
+<footer>
+    <div class="social-icons">
+        <a href="https://www.linkedin.com/" target="_blank"><img src="linkedin.svg" alt="LinkedIn"></a>
+        <a href="https://www.instagram.com/" target="_blank"><img src="instagram.svg" alt="Instagram"></a>
+        <a href="https://wa.me/whatsappnumber" target="_blank"><img src="whatsapp.svg" alt="WhatsApp"></a>
+    </div>
+    <div class="additional-links">
+        <a href="About us.html"><i class="bi bi-info-square"></i> About Us</a>
+        <a href="Contact Us.html"><i class="bi bi-envelope"></i> Contact Us</a>
+        <a href="Terms and Services.html"><i class="bi bi-file-earmark-text"></i> Terms of Service</a>
+        <a href="Privacy Policy.html"><i class="bi bi-shield-lock"></i> Privacy Policy</a>
+    </div>
+    <p>&copy; 2024 Your Company</p>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.0/bootstrap-icons.js"></script>
+</body>
+</html>

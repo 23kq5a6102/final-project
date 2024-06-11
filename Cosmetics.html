@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cosmetics</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: white;
+            background-attachment: fixed;
+            background-size: cover;
+            background-position: center;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            transition: margin-left 0.5s; 
+        }
+        .Title {
+            text-align: center;
+            background-color: indigo;
+            color: white;
+            padding: 20px 0;
+            margin: 0;
+            font-size: 50px;
+            font-family: 'Times New Roman', Times, serif;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            transition: margin-left 0.5s; 
+        }
+        h1 {
+            text-align: center;
+            margin-top: 30px;
+        }
+        .search-bar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 40px 0;
+        }
+        .search-bar input[type="text"] {
+            width: 300px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .search-bar button {
+            padding: 10px 20px;
+            margin-left: 10px;
+            background-color: indigo;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .search-bar button:hover {
+            background-color: rgb(112, 53, 155);
+        }
+        .search-bar .microphone {
+            display: flex;
+            align-items: center;
+            margin-left: 10px;
+        }
+        .search-bar .microphone button {
+            background-color: transparent;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            padding: 0;
+        }
+        .search-bar .microphone button img {
+            width: 30px;
+            height: 30px;
+        }
+        .image {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            width: 75px;
+            height: 75px;
+            border-radius: 7px;
+        }
+        .content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: calc(100vh - 50px);
+            text-align: center;
+            padding: 20px;
+        }
+        .logo {
+            margin-bottom: 20px;
+            width: 150px;
+            padding-left: 1000px;
+        }
+        .menu-icon-container {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            z-index: 1000;
+        }
+        .mic-icon {
+            cursor: pointer;
+            margin-left: 10px;
+        }
+        .sidebar {
+            height: 100%;
+            width: 250px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: rgba(75, 0, 130, 0.9); /* Semi-transparent indigo */
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+            z-index: 999;
+            transform: translateX(-250px); /* Initially hide the sidebar */
+        }
+        .sidebar a {
+            padding: 8px 8px 8px 32px;
+            text-decoration: none;
+            font-size: 25px;
+            color: #f1f1f1;
+            display: block;
+            transition: 0.3s;
+        }
+        .sidebar a:hover {
+            color: #ffd700; /* Gold color on hover */
+        }
+        .sidebar .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+        }
+        .sidebar .logout {
+            position: absolute;
+            bottom: 100px;
+            font-size: 25px;
+            color: #f1f1f1;
+        }
+        .sidebar .logout:hover {
+            color: #ffd700;
+        }
+        .dress-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        .dress-item {
+            text-align: center;
+            margin-bottom: 30px;
+            width: calc(33.333% - 20px); 
+            margin-right: 10px;
+            margin-left: 10px;
+            transition: transform 0.3s, box-shadow 0.3s; 
+        }
+        .dress-item img {
+            width: 100%;
+            height: 400px;
+            border-radius: 5px;
+            border: 1px solid black;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            object-fit: cover; /* Ensures the entire image is visible */
+            transition: transform 0.3s, box-shadow 0.3s; 
+        }
+        .dress-item:hover img {
+            transform: scale(1.05); 
+            box-shadow: 0 8px 16px indigo; 
+        }
+        .dress-item h2 {
+            margin-top: 10px;
+            margin-bottom: 5px;
+        }
+        .dress-item p {
+            margin: 0;
+        }
+        .buttons-container {
+            margin-top: 10px;
+        }
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 10px 0;
+            background-color: #f0f0f0;
+        }
+        .add-to-cart {
+            width: 100px;
+            height: 50px;
+            background-color: yellow;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .Buy-now {
+            width: 100px;
+            height: 50px;
+            background-color: red;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        @media (max-width: 768px) {
+            .search-bar input[type="text"] {
+                width: 200px;
+                font-size: 14px;
+            }
+            .search-bar button {
+                padding: 8px 16px;
+                font-size: 14px;
+            }
+            .dress-item {
+                width: calc(50% - 20px); /* Adjust to 2 items per row */
+            }
+        }
+        @media (max-width: 480px) {
+            .search-bar input[type="text"] {
+                width: 150px;
+                font-size: 12px;
+            }
+            .search-bar button {
+                padding: 6px 12px;
+                font-size: 12px;
+            }
+            .dress-item {
+                width: calc(100% - 20px); /* Adjust to 1 item per row */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <img class="image" src="logo-image.png" alt="Bucket Budget Logo">
+    <header>
+        <h1 class="Title">Cosmetics</h1>
+    </header>
+        <div class="search-bar">
+            <input id="searchInput" type="text" placeholder="Search for your shopping....">
+            <button id="searchButton" type="button">Search</button>
+            <div class="microphone">
+                <button type="button"><img src="mic.svg" alt="Microphone"></button>
+            </div>
+        </div>
+    </header>
+        <div class="menu-icon-container">
+            <svg id="menuIcon" xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
+            </svg>
+        </div>
+    
+        <div id="sidebar" class="sidebar">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeSidebar()">&times;</a>
+        <a href="http://127.0.0.1:5500/Budget-Marketing.html">Home</a>
+        <a href="http://127.0.0.1:5500/profile%20page.html">Profile</a>
+        <a href="http://127.0.0.1:5500/add-to-cart.html">Add To Cart</a>
+        <a href="http://127.0.0.1:5500/order-success.html">Your Orders</a>
+        <a href="http://127.0.0.1:5500/Login.html" class="logout">Log Out</a>
+        </div>
+        
+        <section class="dress-container">
+            <div class="dress-item">
+                <img src="https://i.pinimg.com/originals/3b/07/da/3b07dae475603600fbb1a4bb0bafef6f.png" alt="Cosmetics">
+                <h2>Toner</h2>
+                <p>Intensive Cleanse Complete Set - Gold Elements</p>
+                <p>Price:799</p>
+
+                <div class="buttons-container">
+                    <button type="button" class="btn btn-warning button-left" onclick="addToCart(this)">Add to Cart</button>
+                    <button type="button" class="btn btn-danger button-right">Buy Now</button>
+                  </div>
+            </div>
+            <div class="dress-item">
+                <img src="https://beautytidbits.com/wp-content/uploads/2019/07/it-cosmetics-your-skin-but-better-primer-review.jpg" alt="Cosmetics ">
+                <h2>Primer</h2>
+                <p>Flower Makeup Primer Oil Free Face Cream</p>
+                <p>Price: 199</p>
+                <div class="buttons-container">
+                    <button type="button" class="btn btn-warning button-left" onclick="addToCart(this)">Add to Cart</button>
+                    <button type="button" class="btn btn-danger button-right">Buy Now</button>
+                  </div>
+            </div>
+            <div class="dress-item">
+                <img src="https://www.innenaussen.com/wp-content/uploads/2016/07/Catrice-HD-Liquid-Coverage-Foundation-InnenAussen.jpg" alt="Cosmetics">
+                <h2>Foundation</h2>
+                <p>Cartice HD Liquid Coverage Foundation</p>
+                <p>Price: 999</p>
+                <div class="buttons-container">
+                    <button type="button" class="btn btn-warning button-left" onclick="addToCart(this)">Add to Cart</button>
+                    <button type="button" class="btn btn-danger button-right">Buy Now</button>
+                  </div>
+            </div>
+            <div class="dress-item">
+                <img src="https://www.elfcosmetics.com/dw/image/v2/BBXC_PRD/on/demandware.static/-/Sites-elf-master/default/dw8f077a88/81206_900px_100011.jpg?sw=1100&sh=1100&sm=fit&sfrm=jpg" alt="Cosmetics">
+                <h2>Eye Liner</h2>
+                <p>Precision Liquid Eyeliner</p>
+                <p>Price: 499</p>
+                <div class="buttons-container">
+                    <button type="button" class="btn btn-warning button-left" onclick="addToCart(this)">Add to Cart</button>
+                    <button type="button" class="btn btn-danger button-right">Buy Now</button>
+                  </div>
+            </div>
+            <div class="dress-item">
+                <img src="https://i.pinimg.com/originals/fa/22/24/fa2224e0b32c95ee6dfd5754d7abc41f.jpg" alt="Cosmetics">
+                <h2>LipStick</h2>
+                <p>Cosmetic LipStick Rose Flowers Still Life </p>
+                <p>Price: 699</p>
+                <div class="buttons-container">
+                    <button type="button" class="btn btn-warning button-left" onclick="addToCart(this)">Add to Cart</button>
+                    <button type="button" class="btn btn-danger button-right">Buy Now</button>
+                  </div>
+            </div>
+            <div class="dress-item">
+                <img src="https://images-na.ssl-images-amazon.com/images/I/71Z7kavqetL._SL1500_.jpg" alt="Cosmetics">
+                <h2>Brushes</h2>
+                <p>Best Makeup Brush Sets-DechoFilt</p>
+                <p>Price: 399</p>
+                <div class="buttons-container">
+                    <button type="button" class="btn btn-warning button-left" onclick="addToCart(this)">Add to Cart</button>
+                    <button type="button" class="btn btn-danger button-right">Buy Now</button>
+                  </div>
+            </div>
+            <div class="dress-item">
+                <img src="https://wallpaperaccess.com/full/1190761.jpg" alt="Cosmetics">
+                <h2>Eye Shadow</h2>
+                <p>Eye Shadow Makeup Set</p>
+                <p>Price: 1199</p>
+                <div class="buttons-container">
+                    <button type="button" class="btn btn-warning button-left" onclick="addToCart(this)">Add to Cart</button>
+                    <button type="button" class="btn btn-danger button-right">Buy Now</button>
+                  </div>
+            </div>
+            <div class="dress-item">
+                <img src="https://i5.walmartimages.com/asr/cf6b85ba-f812-4c7c-a123-2d0dbd2b3d8f_1.c7f4e5db259b64eff75c87a7a7315624.jpeg?odnWidth=1000&odnHeight=1000&odnBg=ffffff" alt="Cosmetics">
+                <h2>Maskara</h2>
+                <p>Skin & Cosmetics-Sensitive Eyes Maskara Hypoallergenic</p>
+                <p>Price: 499</p>
+                <div class="buttons-container">
+                    <button type="button" class="btn btn-warning button-left" onclick="addToCart(this)">Add to Cart</button>
+                    <button type="button" class="btn btn-danger button-right">Buy Now</button>
+                  </div>
+            </div>
+            <div class="dress-item">
+                <img src="https://images.squarespace-cdn.com/content/v1/5432e8d7e4b0fd126503b83b/1605639130642-CNVONIB2FS1X2QTCCINC/gold+glitter+cosmetics+nail+varnish.jpg" alt="Cosmetics">
+                <h2>Nail Polish</h2>
+                <p>NailFinity Nail Polish</p>
+                <p>Price: 299</p>
+                <div class="buttons-container">
+                    <button type="button" class="btn btn-warning button-left" onclick="addToCart(this)">Add to Cart</button>
+                    <button type="button" class="btn btn-danger button-right">Buy Now</button>
+                  </div>
+            </div>
+            <div class="dress-item">
+                <img src="https://th-test-11.slatic.net/p/b418e289e7e2223bc4c744ea2aac73f4.jpg" alt="Cosmetics">
+                <h2>Lip Gloss</h2>
+                <p>O.TWO.O Classic Liquid Lipstick Matte Lip Gloss Long Lasting</p>
+                <p>Price:399</p>
+                <div class="buttons-container">
+                    <button type="button" class="btn btn-warning button-left" onclick="addToCart(this)">Add to Cart</button>
+                    <button type="button" class="btn btn-danger button-right">Buy Now</button>
+                  </div>
+            </div>
+            <div class="dress-item">
+                <img src="https://i.pinimg.com/originals/e1/a1/c2/e1a1c20da75dc0ed283f83e6bbafa06c.jpg" alt="Cosmetics">
+                <h2>Lotion</h2>
+                <p>Holiday Collection Hempz Lotion</p>
+                <p>Price: 1899</p>
+                <div class="buttons-container">
+                    <button type="button" class="btn btn-warning button-left" onclick="addToCart(this)">Add to Cart</button>
+                    <button type="button" class="btn btn-danger button-right">Buy Now</button>
+                  </div>
+            </div>
+            <div class="dress-item">
+                <img src="https://images-na.ssl-images-amazon.com/images/I/71dMHrmV-PL._AC_SL1500_.jpg" alt="Cosmetics">
+                <h2>Makeup Kit</h2>
+                <p>Paquete De Maquillaje Todo En Uno Makeup Kit</p>
+                <p>Price: 1399</p>
+                <div class="buttons-container">
+                    <button type="button" class="btn btn-warning button-left" onclick="addToCart(this)">Add to Cart</button>
+                    <button type="button" class="btn btn-danger button-right">Buy Now</button>
+            </div>
+            </div>
+            
+        </section>
+        <script>
+            function openSidebar() {
+            document.getElementById("sidebar").style.transform = "translateX(0)";
+            document.getElementById("mainContainer").style.marginLeft = "250px";
+        }
+    
+        function closeSidebar() {
+            document.getElementById("sidebar").style.transform = "translateX(-250px)";
+            document.getElementById("mainContainer").style.marginLeft = "0";
+        }
+    
+        document.getElementById("menuIcon").addEventListener("click", openSidebar);
+    
+        function performSearch() {
+            const query = document.getElementById("searchInput").value.toLowerCase().trim();
+            if (query === "Clothes" ||query ===  "clothes" ||query ===  "Dresses" ||query ===  "dresses" ||query === "Clothes." ||query ===  "clothes." ||query ===  "Dresses." ||query ===  "dresses.") {
+                window.location.href = "http://127.0.0.1:5500/Fashion%20World.html"; 
+            } else if (query === "Shoes" ||query ===  "shoes" ||query ===  "Shoes." ||query ===  "shoes.") {
+                window.location.href = "http://127.0.0.1:5500/shoes.html";
+            } else if (query === "Cosmetics" ||query ===  "cosmetics" ||query ===  "Cosmetics." ||query ===  "cosmetics.") {
+                window.location.href = "http://127.0.0.1:5500/Cosmetics.html";
+            } else if (query === "Gadgets" ||query ===  "gadgets" ||query ===  "HomeUses" ||query === "Home-Uses" ||query ===  "homeuses" ||query ===  "home-uses" ||query ===  "Home Uses" ||query ===  "Home uses" ||query ===  "Home-uses" ||query ===  "home-Uses" ||query ===  "Gadgets." ||query ===  "gadgets." ||query ===  "HomeUses." ||query === "Home-Uses." ||query ===  "homeuses." ||query ===  "home-uses." ||query ===  "Home Uses." ||query ===  "Home uses." ||query ===  "Home-uses." ||query ===  "home-Uses." ||query ===  "HouseUses" ||query === "House-Uses" ||query ===  "houseuses" ||query ===  "house-uses" ||query ===  "House Uses" ||query ===  "House uses" ||query ===  "House-uses" ||query ===  "house-Uses") {
+                window.location.href = "http://127.0.0.1:5500/Gadgets.html";
+            } else if (query === "Vegetables" ||query ===  "vegetables" ||query ===  "Vegetables." ||query ===  "vegetables.") {
+                window.location.href = "http://127.0.0.1:5500/Vegetables.html";
+            } else if (query === "Fruits" ||query ===  "fruits" ||query === "Fruits." ||query === "fruits.") {
+                window.location.href = "http://127.0.0.1:5500/Fruits.html";
+            } else if (query === "Soft Drinks" ||query ===  "Soft-Drinks" ||query ===  "SoftDrinks" ||query ===  "Softdrinks" ||query ===  "soft Drinks" ||query ===  "soft drinks" ||query ===  "soft-drinks" ||query ===  "Soft-drinks" ||query ===  "soft-Drinks" ||query ===  "Soft Drinks." ||query ===  "Soft-Drinks." ||query ===  "SoftDrinks." ||query ===  "Softdrinks." ||query ===  "soft Drinks." ||query ===  "soft drinks." ||query ===  "soft-drinks." ||query ===  "Soft-drinks." ||query ===  "soft-Drinks.") {
+                window.location.href = "http://127.0.0.1:5500/Soft-Drinks.Html";
+            } else if (query === "Food" ||query ===  "food" ||query ===  "Food." ||query ===  "food.") {
+                window.location.href = "http://127.0.0.1:5500/Food.Html";
+            } else if (query === "Men-Shirts" ||query === "men-shirts" ||query === "Men Shirts." ||query === "Men shirts." ||query === "MenShirts." ||query === "Menshirts" ||query === "menshirts") {
+                    window.location.href = "http://127.0.0.1:5500/Men%20Shirts.html";
+                } else if (query === "Women-Shirts" ||query === "women-shirts" ||query === "Women Shirts." ||query === " women shirts." ||query === "WomenShirts." ||query === "Womenshirts" ||query === "womenshirts") {
+                    window.location.href = "http://127.0.0.1:5500/Women-Shirts.html";
+                } else if (query ===  "Men-Pants" ||query === "men-pants" ||query === "Men Pants." ||query === "men pants." ||query === "MenPants." ||query === "Menpants" ||query === "menpants") {
+                    window.location.href = "http://127.0.0.1:5500/Men-Pants.html";
+                } else if (query === "Women-Pants" ||query === "women-pants" ||query === "Women Pants." ||query === " women pants." ||query === "WomenPants." ||query === "Womenpants" ||query === "womenpants"){
+                    window.location.href = "http://127.0.0.1:5500/Women-Pants.html";
+                } else if (query === "Men-TShirts" ||query === "men-tshirts" ||query === "Men TShirts." ||query === "men tshirts." ||query === "MenTShirts." ||query === "Mentshirts" ||query === "mentshirts") {
+                    window.location.href = "http://127.0.0.1:5500/Men-Tshirt.html";
+                } else if (query === "Women-TShirts" ||query === "women-tshirts" ||query === "Women TShirts." ||query === " women tshirts." ||query === "WomenTShirts." ||query === "Womentshirts" ||query === "womentshirts") {
+                    window.location.href = "http://127.0.0.1:5500/Women-Tshirts.html";
+                } else if (query === "Shirts" ||query === "shirts" ||query === "Shirts." ||query === "shirts." ||query === "Shirts." ||query === "shirts" ||query === "shirts") {
+                    window.location.href = "http://127.0.0.1:5500/shirts.html";
+                } else if (query === "T-Shirts." ||query === "T-Shirts" ||query === "TShirts." ||query === "tshirts." ||query === "TShirts." ||query === "tshirts" ||query === "Tshirts" ||query === "T-Shirts" ||query === "TShirts" ||query === "T-shirts" ||query === "T-shirts." ) {
+                    window.location.href = "http://127.0.0.1:5500/T-Shirts.html";
+                } else if (query ===  "Pants" ||query === "pants" ||query === "Pants." ||query === "pants." ||query === "Pants." ||query === "pants" ||query === "pants") {
+                    window.location.href = "http://127.0.0.1:5500/pants.html";
+                } else {
+                    alert("Page not found.");
+                }
+            }
+            document.getElementById("searchButton").addEventListener("click", performSearch);
+    
+    document.getElementById("searchInput").addEventListener("keypress", function(event) {
+        if (event.key === "Enter") {
+            performSearch();
+        }
+    });
+
+    document.querySelector('.microphone button').addEventListener('click', function() {
+        var recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+        recognition.lang = 'en-US';
+        recognition.interimResults = false;
+        recognition.maxAlternatives = 1;
+
+        recognition.start();
+
+        recognition.onresult = function(event) {
+            var speechResult = event.results[0][0].transcript.replace(/\./g, '');
+            document.getElementById('searchInput').value = speechResult;
+            performSearch(); 
+        };
+
+        recognition.onerror = function(event) {
+            console.error('Speech recognition error detected: ' + event.error);
+        };
+
+        recognition.onspeechend = function() {
+            recognition.stop();
+        };
+    });
+
+    function addToCart(button) {
+        const item = button.closest('.dress-item');
+        const imgSrc = item.querySelector('img').src;
+        const name = item.querySelector('h2').innerText;
+        const description = item.querySelector('p:nth-of-type(1)').innerText;
+        const price = item.querySelector('p:nth-of-type(2)').innerText;
+
+        const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+        cartItems.push({ imgSrc, name, description, price });
+        localStorage.setItem('cartItems', JSON.stringify(cartItems));
+
+        window.location.href = 'http://127.0.0.1:5500/add-to-cart.html'; 
+    }
+
+    function buyNow(button) {
+        const item = button.closest('.dress-item');
+        const imgSrc = item.querySelector('img').src;
+        const name = item.querySelector('h2').innerText;
+        const description = item.querySelector('p:nth-of-type(1)').innerText;
+        const price = item.querySelector('p:nth-of-type(2)').innerText;
+
+        const orderItems = JSON.parse(localStorage.getItem('orderItems')) || [];
+        orderItems.push({ imgSrc, name, description, price });
+        localStorage.setItem('orderItems', JSON.stringify(orderItems));
+
+        window.location.href = 'http://127.0.0.1:5500/payment%20Address.html';
+    }
+
+    document.querySelectorAll('.btn-danger').forEach(button => {
+        button.addEventListener('click', function() {
+            buyNow(this);
+        });
+    });
+</script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</body>
+</html>

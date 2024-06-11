@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Profile Page</title>
+    <style>
+        body {
+            background-size: cover; 
+            background-position: center;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            position: relative; 
+            transition: margin-left 0.5s; /* Smooth transition for margin */
+        }
+        .image {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            width: 75px;
+            height: 75px;
+            border-radius: 7px;
+        }
+        
+        .sidebar {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #111;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+        }
+
+        .sidebar a {
+            padding: 8px 8px 8px 32px;
+            text-decoration: none;
+            font-size: 25px;
+            color: #818181;
+            display: block;
+            transition: 0.3s;
+        }
+
+        .sidebar a:hover {
+            color: #f1f1f1;
+        }
+
+        .sidebar .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+        }
+
+        .sidebar .logout {
+            position: absolute;
+            bottom: 100px;
+            font-size: 25px;
+            color: #818181;
+        }
+
+        .sidebar .logout:hover {
+            color: #f1f1f1;
+        }
+
+        .container {
+            width: 90%;
+            margin: auto;
+            overflow: hidden;
+        }
+
+        header {
+            color: black;
+            padding: 20px 0;
+            text-align: center;
+            font-weight: bold;
+            position: relative; 
+        }
+
+        header h1 {
+            margin: 0;
+        }
+
+        .edit-button {
+            position: absolute;
+            top: 60px; 
+            right: 23px; 
+            background-color: indigo;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .edit-button:hover {
+            background-color: rgb(112, 53, 155);
+        }
+
+        #profile {
+            margin-top: 30px;
+            padding: 20px;
+            background: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #profile h2 {
+            margin: 0;
+        }
+
+        #profile p {
+            margin: 10px 0;
+        }
+
+        .clearfix::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+
+        .order-history, .addresses, .payment-methods {
+            margin-top: 20px;
+            padding: 20px;
+            background: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .order-history h3, .addresses h3, .payment-methods h3 {
+            margin-top: 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        /* Add a media query for smaller screens */
+        @media only screen and (max-width: 600px) {
+            .sidebar a {
+                font-size: 18px;
+            }
+
+            .edit-button {
+                font-size: 12px;
+                padding: 8px 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <img class="image" src="logo-image.png" alt="Bucket Budget Logo">
+    <svg id="menuIcon" xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
+    </svg>
+    
+    <div id="sidebar" class="sidebar">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeSidebar()">&times;</a>
+        <a href="http://127.0.0.1:5500/Bucket-Budget.html">Home</a>
+        <a href="http://127.0.0.1:5500/profile%20page.html">Profile</a>
+        <a href="http://127.0.0.1:5500/add-to-cart.html">Add To Cart</a>
+        <a href="http://127.0.0.1:5500/order-success.html">Your Orders</a>
+        <a href="http://127.0.0.1:5500/Login.html" class="logout">Log Out</a>
+        </div>
+    <header>
+        <div class="container">
+            <h1><b>Profile Page</b></h1>
+        </div>
+        <a href="http://127.0.0.1:5500/edit-profile.html"><button class="edit-button">Edit</button></a>
+    </header>
+
+    <div class="container">
+        <section id="profile" class="clearfix">
+            <div>
+                <h2>K.Bhargav Rohit</h2>
+                <p><strong>Email:</strong> kbhargavrohith@gmail.com</p>
+                <p><strong>Member since:</strong> January 1946</p>
+            </div>
+        </section>
+
+        <section class="order-history">
+            <h3>Order History</h3>
+            <table>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Date</th>
+                    <th>Items</th>
+                    <th>Total</th>
+                    <th>Status</th>
+                </tr>
+                <tr>
+                    <td>123456</td>
+                    <td>2023-05-21</td>
+                    <td>2</td>
+                    <td>$120.00</td>
+                    <td>Delivered</td>
+                </tr>
+                <tr>
+                    <td>123457</td>
+                    <td>2023-04-15</td>
+                    <td>1</td>
+                    <td>$60.00</td>
+                    <td>Processing</td>
+                </tr>
+            </table>
+        </section>
+
+        <section class="addresses">
+            <h3>Saved Addresses</h3>
+            <p><strong>Home:</strong> 123 Main Street, Anytown, USA</p>
+            <p><strong>Work:</strong> 456 Business Rd, Worktown, USA</p>
+        </section>
+
+        <section class="payment-methods">
+            <h3>Payment Methods</h3>
+            <p><strong>Visa ending in 1234</strong></p>
+            <p><strong>MasterCard ending in 5678</strong></p>
+        </section>
+    </div>
+    
+    <script>
+        document.getElementById("menuIcon").onclick = function() {
+            openSidebar();
+        };
+
+        function openSidebar() {
+            document.getElementById("sidebar").style.width = "250px";
+            document.body.style.marginLeft = "250px"; /* Move the body content to the right */
+        }
+
+        function closeSidebar() {
+            document.getElementById("sidebar").style.width = "0";
+            document.body.style.marginLeft = "0"; /* Reset the body margin */
+        }
+    </script>
+</body>
+</html>

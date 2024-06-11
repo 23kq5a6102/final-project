@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            overflow: hidden; 
+        }
+
+        body {
+           
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center; 
+            align-items: center; 
+        }
+        .video-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+        
+        .login-container {
+            background-color: rgba(255, 255, 255, 0.2); 
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 10px 0 10px rgba(0, 0, 0, 0.1);
+            width: 350px;
+            color: #333;
+            backdrop-filter:transparent;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .login-container h3 {
+            margin-bottom: 20px;
+        }
+
+        .login-container label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            font-size: 12px;
+        }
+
+        .login-container input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .login-container button {
+            width: 30%;
+            padding: 10px;
+            background-color: indigo;
+            color: black;
+            border: none;
+            border-radius: 10px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .login-container button:hover { 
+            background-color:rgb(112, 53, 155);
+        }
+
+        .error {
+            color: red;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .image {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 100px;
+            height: 100px;
+            border-radius: 7px;
+        }
+
+        .create-account {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            color: black;
+            font-weight: bold;
+        }
+
+        .forget-password {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            color: black;
+            font-weight: bold;
+        }
+
+        @media only screen and (max-width: 800px) {
+            .login-container {
+                width: 70%;
+            }
+        }
+
+        @media only screen and (max-width: 600px) {
+            .login-container {
+                width: 80%;
+            }
+        }
+
+        @media only screen and (max-width: 400px) {
+            .login-container {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <video class="video-background" autoplay loop muted>
+        <source src="1887-151131664_medium.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <img class="image" src="logo-image.png" alt="Bucket Budget Logo">
+    <a class="create-account" href="Registration.html">Create Account</a>
+    <a class="forget-password" id="forgetPasswordLink" href="forget-password.html">Forget Password?</a>
+
+    <div class="login-container">
+        <h3>Login</h3>
+        <form id="loginForm">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+
+            <div id="error-message" class="error"></div>
+
+            <button type="submit">Login</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            var username = document.getElementById('username').value;
+            var password = document.getElementById('password').value;
+            var errorMessage = document.getElementById('error-message');
+
+            if (username === '' || password === '') {
+                errorMessage.textContent = 'Both fields are required.';
+                return;
+            } else if (password.length < 6) {
+                errorMessage.textContent = 'Password must be at least 6 characters long.';
+                return;
+            }
+
+            errorMessage.textContent = '';
+
+            console.log('Username:', username);
+            console.log('Password:', password);
+
+            alert('Login successful!');
+            window.location.href = 'http://127.0.0.1:5500/Budget-Marketing.html';
+        });
+    </script>
+</body>
+</html>

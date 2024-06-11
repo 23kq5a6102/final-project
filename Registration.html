@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            position: relative;
+        }
+        .video-background {
+            position:fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+        .registration-container {
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.2); 
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 300px;
+            text-align: center;
+            backdrop-filter:transparent;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .registration-container h3 {
+            margin-bottom: 20px;
+        }
+        .registration-container label {
+            color: black;
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            font-size: 12px;
+        }
+        .registration-container input, .registration-container select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .registration-container button {
+            width: 50%;
+            padding: 10px;
+            background-color: indigo;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        .registration-container button:hover {
+            background-color: rgb(112, 53, 155);
+        }
+        .error {
+            color: red;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        .image {
+            position: absolute;
+            top: 5px;
+            right: 20px;
+            width: 100px;
+            height: 100px;
+            border-radius: 7px;
+        }
+        .login-link {
+            margin-top: 20px;
+            color: black;
+            font-weight: bold;
+            display: block;
+        }
+        @media (max-width: 768px) {
+            .registration-container {
+                width: 80%;
+                max-width: none;
+            }
+        }
+        @media (max-width: 480px) {
+            .registration-container {
+                width: 90%;
+                padding: 15px;
+            }
+            .login-link {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <video class="video-background" autoplay loop muted>
+        <source src="44860-440261070.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <img class="image" src="logo-image.png" alt="Bucket Budget Logo">
+
+    <div class="registration-container">
+        <h3>Register</h3>
+        <form name="myform" action="http://127.0.0.1:5500/Budget-Marketing.html" onsubmit="return loginValidation(event)">
+            <label for="firstName">First Name:</label>
+            <input type="text" id="firstName" name="firstName" placeholder="First Name" required>
+
+            <label for="lastName">Last Name:</label>
+            <input type="text" id="lastName" name="lastName" placeholder="Last Name" required>
+
+            <label for="phoneNumber">Phone Number:</label>
+            <input type="tel" id="phoneNumber" name="phoneNumber" placeholder="Phone Number" required>
+
+            <label for="city">City:</label>
+            <select id="city" name="city" required>
+                <option value="" disabled selected>Select your city</option>
+                <option value="Visakhapatnam">Visakhapatnam</option>
+                <option value="Vijayawada">Vijayawada</option>
+                <option value="Guntur">Guntur</option>
+                <option value="Nellore">Nellore</option>
+                <option value="Kurnool">Kurnool</option>
+                <option value="Rajahmundry">Rajahmundry</option>
+                <option value="Kakinada">Kakinada</option>
+                <option value="Tirupati">Tirupati</option>
+                <option value="Kadapa">Kadapa</option>
+                <option value="Anantapur">Anantapur</option>
+                <option value="Eluru">Eluru</option>
+                <option value="Ongole">Ongole</option>
+                <option value="Nandyal">Nandyal</option>
+                <option value="Chittoor">Chittoor</option>
+                <option value="Machilipatnam">Machilipatnam</option>
+            </select>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" placeholder="123@gmail.com" required>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" placeholder="Password" required>
+
+            <div id="error-message" class="error"></div>
+
+            <button type="submit" id="registerButton">Submit</button>
+        </form>
+        <a class="login-link" href="Login.html">Log in</a>
+    </div>
+
+    <script>
+        function loginValidation(event) {
+            var firstName = document.myform.firstName.value;
+            var lastName = document.myform.lastName.value;
+            var phoneNumber = document.myform.phoneNumber.value;
+            var city = document.myform.city.value;
+            var email = document.myform.email.value;
+            var password = document.myform.password.value;
+            var errorMessage = document.getElementById('error-message');
+
+            errorMessage.textContent = '';
+
+            if (!firstName || !lastName || !phoneNumber || !city || !email || !password) {
+                errorMessage.textContent = 'All fields are required.';
+                alert('All fields are required.');
+                event.preventDefault();
+                return false;
+            } else if (!validateEmail(email)) {
+                errorMessage.textContent = 'Please enter a valid email address.';
+                alert('Please enter a valid email address.');
+                event.preventDefault();
+                return false;
+            } else if (password.length < 6) {
+                errorMessage.textContent = 'Password must be at least 6 characters long.';
+                alert('Password must be at least 6 characters long.');
+                event.preventDefault();
+                return false;
+            } else if (!validatePhoneNumber(phoneNumber)) {
+                errorMessage.textContent = 'Please enter a valid phone number.';
+                alert('Please enter a valid phone number.');
+                event.preventDefault();
+                return false;
+            }
+
+            return true;
+        }
+
+        function validateEmail(email) {
+            var re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(String(email).toLowerCase());
+        }
+
+        function validatePhoneNumber(phoneNumber) {
+            var re = /^\d{10}$/;
+            return re.test(String(phoneNumber));
+        }
+    </script>
+</body>
+</html>

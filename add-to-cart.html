@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <style>
+        body {
+            background-image: url("https://wallpaperboat.com/wp-content/uploads/2020/11/10/60057/shopping-07.jpg");
+            background-attachment: fixed;
+            background-size: cover;
+            background-position: center;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            transition: margin-left 0.5s; 
+        }
+        .image {
+            position: absolute;
+            top: 50px;
+            right: 20px;
+            width: 75px;
+            height: 75px;
+            border-radius: 7px;
+        }
+        .sidebar {
+            height: 100%;
+            width: 250px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: rgba(75, 0, 130, 0.9); /* Semi-transparent indigo */
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+            z-index: 999;
+            transform: translateX(-250px); /* Initially hide the sidebar */
+        }
+        .sidebar a {
+            padding: 8px 8px 8px 32px;
+            text-decoration: none;
+            font-size: 25px;
+            color: #f1f1f1;
+            display: block;
+            transition: 0.3s;
+        }
+        .sidebar a:hover {
+            color: #ffd700; /* Gold color on hover */
+        }
+        .sidebar .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+        }
+        .sidebar .logout {
+            position: absolute;
+            bottom: 100px;
+            font-size: 25px;
+            color: #f1f1f1;
+        }
+        .sidebar .logout:hover {
+            color: #ffd700;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: margin-left 0.5s; 
+        }
+        h1 {
+            text-align: center;
+            margin-top: 30px;
+        }
+        .cart-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+        .cart-item img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            margin-right: 20px;
+            border-radius: 5px;
+        }
+        .cart-item button {
+            margin-left: auto;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            .cart-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .cart-item img {
+                margin-bottom: 10px;
+                width: 100%;
+                height: auto;
+            }
+            .cart-item button {
+                margin-left: 0;
+                align-self: flex-end;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 24px;
+            }
+            .sidebar a {
+                font-size: 20px;
+                padding: 8px 8px 8px 16px;
+            }
+            .sidebar .logout {
+                font-size: 20px;
+            }
+            .container {
+                padding: 5px;
+            }
+            .cart-item {
+                padding: 5px;
+            }
+            .cart-item img {
+                width: 100%;
+                height: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <img class="image" src="logo-image.png" alt="Bucket Budget Logo">
+    <svg id="menuIcon" xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
+    </svg>
+    
+    <div id="sidebar" class="sidebar">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeSidebar()">&times;</a>
+        <a href="http://127.0.0.1:5500/Budget-Marketing.html">Home</a>
+        <a href="http://127.0.0.1:5500/profile%20page.html">Profile</a>
+        <a href="http://127.0.0.1:5500/add-to-cart.html">Add To Cart</a>
+        <a href="http://127.0.0.1:5500/order-success.html">Your Orders</a>
+        <a href="http://127.0.0.1:5500/Login.html" class="logout">Log Out</a>
+        </div>
+
+    <div class="container">
+        <h1>Your Cart</h1>
+        <div id="cartItemsContainer"></div>
+    </div>
+    <script>
+         function openSidebar() {
+            document.getElementById("sidebar").style.transform = "translateX(0)";
+            document.getElementById("mainContainer").style.marginLeft = "250px";
+        }
+    
+        function closeSidebar() {
+            document.getElementById("sidebar").style.transform = "translateX(-250px)";
+            document.getElementById("mainContainer").style.marginLeft = "0";
+        }
+    
+        document.getElementById("menuIcon").addEventListener("click", openSidebar);
+        
+        function loadCartItems() {
+            const cartItemsContainer = document.getElementById('cartItemsContainer');
+            const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+            cartItemsContainer.innerHTML = '';
+
+            cartItems.forEach((item, index) => {
+                const cartItem = document.createElement('div');
+                cartItem.className = 'cart-item';
+                cartItem.innerHTML = `
+                    <img src="${item.imgSrc}" alt="Dress Image">
+                    <div>
+                        <h2>${item.name}</h2>
+                        <p>${item.description}</p>
+                        <p>Price: ${item.price}</p>
+                    </div>
+                    <button class="btn btn-danger" onclick="removeCartItem(${index})">Remove</button>
+                `;
+                cartItemsContainer.appendChild(cartItem);
+            });
+        }
+
+        function removeCartItem(index) {
+            const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+            cartItems.splice(index, 1);
+            localStorage.setItem('cartItems', JSON.stringify(cartItems));
+            loadCartItems();
+        }
+
+        document.addEventListener('DOMContentLoaded', loadCartItems);
+    </script>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Scrolling Side by Side</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .scrolling-wrapper {
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .scrolling-container {
+            display: flex;
+            width: calc(100% * 8); /* 8 images in total */
+            animation: scroll 20s linear infinite;
+        }
+
+        .scrolling-container a {
+            display: block;
+            width: 50vh; /* Ensure images take full viewport width */
+            margin-right: 10px; /* Adjust space between images */
+        }
+
+        .scrolling-container img {
+            width: 200px; /* Fixed width */
+            height: 300px; /* Fixed height */
+            object-fit: cover;
+            transition: transform 0.1s ease;
+        }
+
+        .scrolling-container img:hover {
+            transform: scale(1.1);
+        }
+
+        @keyframes scroll {
+            from {
+                transform: translateX(0);
+            }
+            to {
+                transform: translateX(-50%); /* Move by the width of 4 images */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="scrolling-wrapper">
+        <div class="scrolling-container">
+            <a href="https://www.brandingpros.com"><img src="https://www.brandingpros.com/wp-content/uploads/2017/11/embroidery-casual-shirts.png" alt="Image 1"></a>
+            <a href="https://identitypromotions.net"><img src="https://identitypromotions.net/wp-content/uploads/2021/02/identity-T-Shirts-1-980x980.jpg" alt="Image 2"></a>
+            <a href="https://www.skankblogs.com"><img src="https://www.skankblogs.com/wp-content/uploads/2022/04/corporate-branded-clothing.jpg" alt="Image 3"></a>
+            <a href="https://www.jpgdesign.co.za"><img src="https://www.jpgdesign.co.za/jpgdesign/images/services/minions/branded-golf-shirts-01.jpg" alt="Image 4"></a>
+            <a href="https://www.brandingpros.com"><img src="https://www.brandingpros.com/wp-content/uploads/2017/11/embroidery-casual-shirts.png" alt="Image 1"></a>
+            <a href="https://identitypromotions.net"><img src="https://identitypromotions.net/wp-content/uploads/2021/02/identity-T-Shirts-1-980x980.jpg" alt="Image 2"></a>
+            <a href="https://www.skankblogs.com"><img src="https://www.skankblogs.com/wp-content/uploads/2022/04/corporate-branded-clothing.jpg" alt="Image 3"></a>
+            <a href="https://www.jpgdesign.co.za"><img src="https://www.jpgdesign.co.za/jpgdesign/images/services/minions/branded-golf-shirts-01.jpg" alt="Image 4"></a>
+            <a href="https://www.brandingpros.com"><img src="https://www.brandingpros.com/wp-content/uploads/2017/11/embroidery-casual-shirts.png" alt="Image 1"></a>
+            <a href="https://identitypromotions.net"><img src="https://identitypromotions.net/wp-content/uploads/2021/02/identity-T-Shirts-1-980x980.jpg" alt="Image 2"></a>
+            <a href="https://www.skankblogs.com"><img src="https://www.skankblogs.com/wp-content/uploads/2022/04/corporate-branded-clothing.jpg" alt="Image 3"></a>
+            <a href="https://www.jpgdesign.co.za"><img src="https://www.jpgdesign.co.za/jpgdesign/images/services/minions/branded-golf-shirts-01.jpg" alt="Image 4"></a>
+            <a href="https://www.brandingpros.com"><img src="https://www.brandingpros.com/wp-content/uploads/2017/11/embroidery-casual-shirts.png" alt="Image 1"></a>
+            <a href="https://identitypromotions.net"><img src="https://identitypromotions.net/wp-content/uploads/2021/02/identity-T-Shirts-1-980x980.jpg" alt="Image 2"></a>
+            <a href="https://www.skankblogs.com"><img src="https://www.skankblogs.com/wp-content/uploads/2022/04/corporate-branded-clothing.jpg" alt="Image 3"></a>
+            <a href="https://www.jpgdesign.co.za"><img src="https://www.jpgdesign.co.za/jpgdesign/images/services/minions/branded-golf-shirts-01.jpg" alt="Image 4"></a>
+        </div>
+    </div>
+    <script>
+        const scrollingContainer = document.querySelector('.scrolling-container');
+
+        scrollingContainer.addEventListener('mouseover', () => {
+            scrollingContainer.style.animationPlayState = 'paused';
+        });
+
+        scrollingContainer.addEventListener('mouseout', () => {
+            scrollingContainer.style.animationPlayState = 'running';
+        });
+    </script>
+</body>
+</html>

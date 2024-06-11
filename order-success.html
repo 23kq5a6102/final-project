@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Success</title>
+    <style>
+        body {
+            background-image: url("https://wallpaperboat.com/wp-content/uploads/2020/11/10/60057/shopping-07.jpg");
+            background-attachment: fixed;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+            transition: margin-left 0.5s;
+        }
+        .sidebar {
+            height: 100%;
+            width: 250px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: rgba(75, 0, 130, 0.9); /* Semi-transparent indigo */
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+            z-index: 999;
+            transform: translateX(-250px); /* Initially hide the sidebar */
+        }
+        .sidebar a {
+            padding: 8px 8px 8px 32px;
+            text-decoration: none;
+            font-size: 25px;
+            color: #f1f1f1;
+            display: block;
+            transition: 0.3s;
+        }
+        .sidebar a:hover {
+            color: #ffd700; /* Gold color on hover */
+        }
+        .sidebar .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+        }
+        .sidebar .logout {
+            position: absolute;
+            bottom: 100px;
+            font-size: 25px;
+            color: #f1f1f1;
+        }
+        .sidebar .logout:hover {
+            color: #ffd700;
+        }
+        .image-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .order-item {
+            margin: 10px;
+            position: relative;
+        }
+        .order-item img {
+            width: 200px;
+            height: auto;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            object-fit: cover;
+        }
+        .remove-btn {
+            position: absolute;
+            top: -30px;
+            right: 0;
+            background-color: red;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+        .order-item-text {
+            text-align: center;
+            padding: 5px;
+            color:black;
+            
+        }
+        h1 {
+            color: green;
+        }
+        p {
+            margin: 5px 0;
+        }
+        #noOrders {
+            display: none;
+            font-size: 24px;
+            color: red;
+        }
+        #menuIcon {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            cursor: pointer;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+    <svg id="menuIcon" xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
+    </svg>
+    <div id="sidebar" class="sidebar">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeSidebar()">&times;</a>
+        <a href="http://127.0.0.1:5500/Budget-Marketing.html">Home</a>
+        <a href="http://127.0.0.1:5500/profile%20page.html">Profile</a>
+        <a href="http://127.0.0.1:5500/add-to-cart.html">Add To Cart</a>
+        <a href="http://127.0.0.1:5500/order-success.html">Your Orders</a>
+        <a href="http://127.0.0.1:5500/Login.html" class="logout">Log Out</a>
+        </div>
+    <h1 id="orderTitle">Order Success!</h1>
+    <p id="orderText">Thank you so much for your order. Your product has been successfully ordered.</p>
+    <p></p>
+    <p></p>
+    <div id="noOrders">No orders</div>
+    <div class="image-container" id="imageContainer"></div>
+    <script>
+         function openSidebar() {
+            document.getElementById("sidebar").style.transform = "translateX(0)";
+            document.getElementById("mainContainer").style.marginLeft = "250px";
+        }
+    
+        function closeSidebar() {
+            document.getElementById("sidebar").style.transform = "translateX(-250px)";
+            document.getElementById("mainContainer").style.marginLeft = "0";
+        }
+    
+        document.getElementById("menuIcon").addEventListener("click", openSidebar);
+
+        function displayOrderItems() {
+            const orderItems = JSON.parse(localStorage.getItem('orderItems')) || [];
+            const imageContainer = document.getElementById('imageContainer');
+            imageContainer.innerHTML = '';
+            
+
+            if (orderItems.length === 0) {
+                document.getElementById('noOrders').style.display = 'block';
+                document.getElementById('orderTitle').style.display = 'none';
+                document.getElementById('orderText').style.display = 'none';
+            } else {
+                document.getElementById('noOrders').style.display = 'none';
+                document.getElementById('orderTitle').style.display = 'block';
+                document.getElementById('orderText').style.display = 'block';
+
+                orderItems.forEach((item, index) => {
+                    const div = document.createElement('div');
+                    div.classList.add('order-item');
+
+                    const img = document.createElement('img');
+                    img.src = item.imgSrc;
+                    img.alt = item.name;
+                    div.appendChild(img);
+
+                    const textDiv = document.createElement('div');
+                    textDiv.classList.add('order-item-text');
+
+                    const name = document.createElement('p');
+                    name.innerText = item.name;
+                    textDiv.appendChild(name);
+
+                    const description = document.createElement('p');
+                    description.innerText = item.description;
+                    textDiv.appendChild(description);
+
+                    const price = document.createElement('p');
+                    price.innerText = item.price;
+                    textDiv.appendChild(price);
+
+                    div.appendChild(textDiv);
+
+                    const removeBtn = document.createElement('button');
+                    removeBtn.innerText = 'Remove';
+                    removeBtn.classList.add('remove-btn');
+                    removeBtn.addEventListener('click', function() {
+                        orderItems.splice(index, 1);
+                        localStorage.setItem('orderItems', JSON.stringify(orderItems));
+                        displayOrderItems();
+                    });
+                    div.appendChild(removeBtn);
+
+                    imageContainer.appendChild(div);
+                });
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            displayOrderItems();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Address</title>
+    <style>
+        body {
+            display:flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+        .image {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            width: 75px;
+            height: 75px;
+            border-radius: 7px;
+        }
+        .video-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 150%;
+            object-fit:cover;
+            z-index: -1;
+        }
+        .container {
+            object-fit:cover;
+            background-color: rgba(255, 255, 255, 0.2); 
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 10px 0 10px rgba(0, 0, 0, 0.1);
+            width: 350px;
+            color: #333;
+            backdrop-filter:transparent;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        h2 {
+            margin-bottom: 20px;
+            color: indigo;
+        }
+        input[type="text"], input[type="number"], select {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            
+        }
+        .error {
+            color: red;
+            font-size: 12px;
+            margin-top: -10px;
+            margin-bottom: 10px;
+            display: none;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: indigo;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+        button:hover {
+            background-color: rgb(112, 53, 155);
+        }
+    </style>
+</head>
+<body>
+    <video class="video-background" autoplay loop muted>
+        <source src="2988-165221419.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <img class="image" src="logo-image.png" alt="Bucket Budget Logo">
+    <div class="container">
+        <h2>Enter Shipping Address</h2>
+       Full Name: <input type="text" id="fullName" placeholder="Full Name">
+        <div class="error" id="fullNameError">Full Name is required</div>
+
+       AddressLine1: <input type="text" id="addressLine1" placeholder="Address Line 1">
+        <div class="error" id="addressLine1Error">Address Line 1 is required</div>
+
+        AddressLine2: <input type="text" id="addressLine2" placeholder="Address Line 2 (Optional)">
+
+        City: <input type="text" id="city" placeholder="City">
+        <div class="error" id="cityError">City is required</div>
+
+       State: <select id="state">
+            <option value="" disabled selected>Select State</option>
+            <option value="AN">Andaman and Nicobar Islands</option>
+            <option value="AP">Andhra Pradesh</option>
+            <option value="AR">Arunachal Pradesh</option>
+            <option value="AS">Assam</option>
+            <option value="BR">Bihar</option>
+            <option value="CG">Chandigarh</option>
+            <option value="CH">Chhattisgarh</option>
+            <option value="DH">Dadra and Nagar Haveli and Daman and Diu</option>
+            <option value="DL">Delhi</option>
+            <option value="GA">Goa</option>
+            <option value="GJ">Gujarat</option>
+            <option value="HR">Haryana</option>
+            <option value="HP">Himachal Pradesh</option>
+            <option value="JK">Jammu and Kashmir</option>
+            <option value="JH">Jharkhand</option>
+            <option value="KA">Karnataka</option>
+            <option value="KL">Kerala</option>
+            <option value="LA">Ladakh</option>
+            <option value="LD">Lakshadweep</option>
+            <option value="MP">Madhya Pradesh</option>
+            <option value="MH">Maharashtra</option>
+            <option value="MN">Manipur</option>
+            <option value="ML">Meghalaya</option>
+            <option value="MZ">Mizoram</option>
+            <option value="NL">Nagaland</option>
+            <option value="OR">Odisha</option>
+            <option value="PY">Puducherry</option>
+            <option value="PB">Punjab</option>
+            <option value="RJ">Rajasthan</option>
+            <option value="SK">Sikkim</option>
+            <option value="TN">Tamil Nadu</option>
+            <option value="TG">Telangana</option>
+            <option value="TR">Tripura</option>
+            <option value="UP">Uttar Pradesh</option>
+            <option value="UK">Uttarakhand</option>
+            <option value="WB">West Bengal</option>
+        </select>
+        <div class="error" id="stateError">State is required</div>
+
+       PinCode: <input type="number" id="zip" placeholder="ZIP Code">
+        <div class="error" id="zipError">ZIP Code is required</div>
+
+       PhoneNumber: <input type="text" id="phoneNumber" placeholder="Phone Number">
+        <div class="error" id="phoneNumberError">Phone Number is required</div>
+
+        <button id="continueButton" onclick="redirectToPaymentMethod()">Continue to Payment Method</button>
+    </div>
+    <script>
+        document.getElementById("continueButton").onclick = function() {
+            const fullName = document.getElementById("fullName").value.trim();
+            const addressLine1 = document.getElementById("addressLine1").value.trim();
+            const addressLine2 = document.getElementById("addressLine2").value.trim();
+            const city = document.getElementById("city").value.trim();
+            const state = document.getElementById("state").value;
+            const zip = document.getElementById("zip").value.trim();
+            const phoneNumber = document.getElementById("phoneNumber").value.trim();
+
+            let isValid = true;
+
+            if (!fullName) {
+                document.getElementById("fullNameError").style.display = "block";
+                isValid = false;
+            } else {
+                document.getElementById("fullNameError").style.display = "none";
+            }
+
+            if (!addressLine1) {
+                document.getElementById("addressLine1Error").style.display = "block";
+                isValid = false;
+            } else {
+                document.getElementById("addressLine1Error").style.display = "none";
+            }
+
+            if (!city) {
+                document.getElementById("cityError").style.display = "block";
+                isValid = false;
+            } else {
+                document.getElementById("cityError").style.display = "none";
+            }
+
+            if (!state) {
+                document.getElementById("stateError").style.display = "block";
+                isValid = false;
+            } else {
+                document.getElementById("stateError").style.display = "none";
+            }
+
+            if (!zip) {
+                document.getElementById("zipError").style.display = "block";
+                isValid = false;
+            } else {
+                document.getElementById("zipError").style.display = "none";
+            }
+
+            if (!phoneNumber) {
+                document.getElementById("phoneNumberError").style.display = "block";
+                isValid = false;
+            } else {
+                document.getElementById("phoneNumberError").style.display = "none";
+            }
+
+            if (!isValid) {
+                return;
+            }
+
+            const addressInfo = { fullName, addressLine1, addressLine2, city, state, zip, phoneNumber };
+            localStorage.setItem('addressInfo', JSON.stringify(addressInfo));
+
+            
+            window.location.href = 'http://127.0.0.1:5500/payment%20method.html';
+        };
+    </script>
+</body>
+</html>
